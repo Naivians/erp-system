@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
     @include('includes.head')
-    @include('includes.bslink')
 </head>
 <body>
     @yield('dashboard')
 
     @include('includes.bsjs')
+    <script src="{{asset('assets/js/main.js')}}"></script>
 </body>
 </html>

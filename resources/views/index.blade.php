@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 @include('includes.head')
-@include('includes.bslink')
 
 <body>
 
