@@ -19,9 +19,12 @@ Route::middleware(['check.role:0'])->group(function (){
     Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')->middleware('check.role:0');
 });
 
+// pre comment ka kung nakita mo to
+// kita ko na pree
 
 // auth
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
+Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
 Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
 
 // cashier
