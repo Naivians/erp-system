@@ -20,12 +20,12 @@ Route::middleware(['check.role:0'])->group(function (){
 });
 
 // pre comment ka kung nakita mo to
+// kita ko na pree
 
 // auth
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
 Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
 Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
 
-// employee
-Route::get('/pos', [PosController::class, 'view'])->name('employee.POS');
-
+// cashier
+Route::get('/pos', [PosController::class, 'view'])->name('cashier.POS');
