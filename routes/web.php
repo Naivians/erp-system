@@ -24,10 +24,12 @@ Route::middleware(['check.role:1'])->group(function () {
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home');
+    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')
+    Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
+    Route::get('/pos/{categories}', [PosController::class, 'getItemsByCategory']);
 });
 
-
-Route::post('/login', [AuthController::class, 'authUser'])->name('Logins.auth');
-Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
+// auth
+Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
+Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
 

@@ -20,4 +20,8 @@ class HomeController extends Controller
     {
         return view('admin.dashboard');
     }
+
+    public function userPos (){
+        return view('user.POS');
+    }
 }
