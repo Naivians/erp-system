@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PosController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\DashboardController;
 
 // home
 Route::get('/',[HomeController::class, 'index'])->name('home');
@@ -13,4 +14,7 @@ Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home'
 // auth
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
 Route::post('/logout',[AuthController::class, 'authUser'])->name('Logins.auth');
+
+// employee
+Route::get('/pos', [PosController::class, 'view'])->name('employee.POS');
 
