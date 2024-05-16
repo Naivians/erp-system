@@ -11,35 +11,25 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
-    <style>
-        .container-fluid {
-            background-color: rgb(169, 169, 255);
-            width: 100vw;
-            /* Set width to 100% of the viewport width */
-            height: 100vh;
-            /* Set height to 100% of the viewport height */
-        }
-    </style>
 </head>
 
 <body>
-    <div class="container-fluid" style="Background-color:rgb(169, 169, 255);">
+    <div class="container-fluid" style="Background-color:rgb(169, 169, 255);position: fixed; width: 100%; height: 100%;">
         <div class="row">
-            <div class="col-md-6 text-center" style="background-color:pink">
+            <div class="col-8 col-md-8" style="background-color: pink;position:fixed;height:100%;">
                 <h3>POS MANAGEMENT</h3>
-                <button>Food</button>
-                <button>Drinks</button>
             </div>
-        </div>
-        <div class="row text-center">
-            <div class="col-md-6" style="background-color:fuchsia;">
-                <button>Food pictures</button>
-                <button>Drinks pictures</button>
-            </div>
-        </div>
-        <div class="row" style="min-width:200px;">
-            <div class="col-md-6 text-center" style="background-color:red">
-                <!-- Add your content here -->
+            <div class="col-4 col-md-4">
+                <div class="row">
+                    <div class="col-12 col-md-12" style="background-color:rgb(223, 38, 69);position: fixed; height: 100%;">
+                        <h3>Food</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-12" style="background-color:rgb(91, 255, 76);position: fixed; height: 100%;">'
+                        <h3>drinks</h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

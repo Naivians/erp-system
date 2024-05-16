@@ -25,7 +25,7 @@
             <i class='bx bxs-purchase-tag fs-3 me-2'></i>
             Orders</a>
 
-        <a href="{{ route('employee.POS') }}" class="text-dark mt-3 d-flex align-items-center">
+        <a href="{{ route('cashier.POS') }}" class="text-dark mt-3 d-flex align-items-center">
             <i class='bx bx-window fs-3 me-2'></i>
             POS</a>
 

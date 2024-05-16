@@ -15,6 +15,5 @@ Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home'
 // auth
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
 
-// employee
-Route::get('/pos', [PosController::class, 'view'])->name('employee.POS');
-
+// cashier
+Route::get('/pos', [PosController::class, 'view'])->name('cashier.POS');
