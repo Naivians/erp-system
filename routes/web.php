@@ -2,13 +2,15 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
-// admin
-Route::get('/admin/home', [DashboardController::class, 'adminHome'])->name('Admin.home');
+// home
+Route::get('/',[HomeController::class, 'index'])->name('home');
+Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('Admins.home')->middleware('check.role:1');
+Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')->middleware('check.role:0');
 
 
 // auth
-Route::get('/',[AuthController::class, 'index'])->name('index');
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
 

@@ -31,6 +31,13 @@ class AuthController extends Controller
             // check for role number
             // 0 = user
             // 1 = admin
+            $request->session()->put('user', $user);
+
+            if($user->role == 1){
+                return redirect()->route('Admins.home');
+            }else{
+                return redirect()->route('Users.home');
+            }
         } else {
             return redirect()->back()->with('error', 'username and password is incorrect');
         }
