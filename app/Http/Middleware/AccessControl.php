@@ -17,10 +17,18 @@ class AccessControl
     {
         $user = $request->session()->get('user');
 
-        if($user && $user->role == $role){
-            return $next($request);
+        if(!$user){
+            return redirect()->route('home');
         }
 
-        return redirect()->route('home')->with('error', 'You have no permission to access this page');
+        if ($user->role != $role) {
+            if ($user->role == 1) {
+                return redirect()->route('Admins.home');
+            } elseif ($user->role == 0) {
+                return redirect()->route('Users.home');
+            }
+        }
+
+       return $next($request);
     }
 }
