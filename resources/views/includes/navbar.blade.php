@@ -4,7 +4,7 @@
         <div class="dropdown">
             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @if (Session::has('user'))
-                    {{Session::get('user')->username}}
+                    {{Session::get('user')->name}}
                 @endif
             </button>
             <ul class="dropdown-menu">

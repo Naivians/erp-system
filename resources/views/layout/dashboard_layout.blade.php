@@ -4,9 +4,14 @@
     @include('includes.head')
 </head>
 <body>
-    @yield('dashboard')
+    <main>
+        @include('includes.sidebar')
+        @include('includes.navbar')
+        @yield('dashboard')
 
-    @include('includes.bsjs')
-    <script src="{{asset('assets/js/main.js')}}"></script>
+        @include('includes.bsjs')
+        <script src="{{asset('assets/js/jquery.js')}}"></script>
+        <script src="{{asset('assets/js/main.js')}}"></script>
+    </main>
 </body>
 </html>

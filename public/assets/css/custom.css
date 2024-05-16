@@ -14,6 +14,7 @@
     border-right: 1px solid #f4f4f4;
     transition: all .3s ease-in-out;
     z-index: 999;
+    background-color: #f4f4f4;
 }
 
 .sidebar.move{
