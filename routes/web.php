@@ -17,15 +17,11 @@ Route::middleware(['check.role:1'])->group(function (){
 // user
 Route::middleware(['check.role:0'])->group(function (){
     Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')->middleware('check.role:0');
+    Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
+    Route::get('/pos/{categories}', [PosController::class, 'getItemsByCategory']);
 });
-
-// pre comment ka kung nakita mo to
-// kita ko na pree
 
 // auth
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
 Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
 Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
-
-// cashier
-Route::get('/pos', [PosController::class, 'view'])->name('cashier.POS');
