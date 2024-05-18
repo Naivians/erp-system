@@ -8,7 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 
 // home
-<<<<<<< HEAD
+
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // admin
@@ -19,7 +19,7 @@ Route::middleware(['check.role:1'])->group(function () {
 // user
 Route::middleware(['check.role:0'])->group(function () {
     Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')->middleware('check.role:0');
-=======
+
 Route::get('/',[HomeController::class, 'index'])->name('login');
 
 // admin
@@ -36,8 +36,7 @@ Route::middleware(['check.role:1'])->group(function () {
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')
->>>>>>> c445eff799592607050bea15339f87bd4fc65800
+    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home');
     Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
     Route::get('/pos/{category}', [PosController::class, 'showCategory']);
     Route::post('/add-to-session', [PosController::class, 'addToSession']);
@@ -47,12 +46,9 @@ Route::middleware(['check.role:0'])->group(function (){
 });
 
 // auth
-<<<<<<< HEAD
 Route::post('/login', [AuthController::class, 'authUser'])->name('Logins.auth');
 Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
 Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
-=======
 Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
 Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
-
->>>>>>> c445eff799592607050bea15339f87bd4fc65800
+});
