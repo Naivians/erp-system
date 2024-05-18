@@ -26,13 +26,15 @@ Route::middleware(['check.role:1'])->group(function () {
     // categories
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('Admin.category');
     Route::post('/admin/create', [CategoryController::class, 'store'])->name('Admins.storeCategory');
-    Route::get('/admin/{id}/edit', [CategoryController::class, 'edit'])->name('Admins.editCategory');
+    Route::get('/admin/{id}', [CategoryController::class, 'edit'])->name('Admins.editCategory');
     Route::put('/admin/update', [CategoryController::class, 'update'])->name('Admins.updateCategory');
     Route::get('/deleteCategory/{id}', [CategoryController::class, 'destroy'])->name('Admins.deleteCategory');
 
     // inventory
     Route::get('/admin/inventory/home', [InventoryController::class, 'index'])->name('Admins.InventoryHome');
-
+    Route::post('/admin/inventory/register', [InventoryController::class, 'store'])->name('Admins.InventoryStore');
+    Route::get('/deleteInventory/{id}', [InventoryController::class, 'destroy'])->name('Admins.InventoryDestroy');
+    Route::get('/admin/{id}/edit', [InventoryController::class, 'edit'])->name('Admins.InventoryEdit');
 });
 
 // user

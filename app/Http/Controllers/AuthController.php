@@ -34,7 +34,7 @@ class AuthController extends Controller
             $request->session()->put('user', $user);
 
             if($user->role == 1){
-                return redirect()->route('Admins.home');
+                return redirect()->route('Admins.InventoryHome');
             }else{
                 return redirect()->route('user.POS');
             }
