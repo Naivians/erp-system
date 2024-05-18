@@ -10,12 +10,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
 
 // home
-Route::get('/',[HomeController::class, 'index'])->name('login');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // admin
 Route::middleware(['check.role:1'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('Admins.home');
-
     // users
     Route::get('/admin/user', [UserController::class, 'index'])->name('Admins.user');
     Route::post('/admin/user/store', [UserController::class, 'store'])->name('Admins.store');
@@ -38,12 +37,16 @@ Route::middleware(['check.role:1'])->group(function () {
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home');
+    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')
     Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
-    Route::get('/pos/{categories}', [PosController::class, 'getItemsByCategory']);
+    Route::get('/pos/{category}', [PosController::class, 'showCategory']);
+    Route::post('/add-to-session', [PosController::class, 'addToSession']);
+    Route::get('/session-data', [PosController::class, 'getSessionData']);
+    Route::post('/save-orders', [PosController::class, 'saveOrders'])->name('Users.orders');
+    Route::post('/clear-session', [PosController::class, 'clearSession'])->name('Users.sessions');
 });
 
 // auth
-Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
-Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
+Route::post('/login', [AuthController::class, 'authUser'])->name('Logins.auth');
+Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
 
