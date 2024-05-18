@@ -10,7 +10,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
 
 // home
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('login');
 
 // admin
 Route::middleware(['check.role:1'])->group(function () {
@@ -37,8 +37,7 @@ Route::middleware(['check.role:1'])->group(function () {
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')
-    Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
+    Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS'); // naka direct na to sa POS mo ahh kapag login
     Route::get('/pos/{category}', [PosController::class, 'showCategory']);
     Route::post('/add-to-session', [PosController::class, 'addToSession']);
     Route::get('/session-data', [PosController::class, 'getSessionData']);
