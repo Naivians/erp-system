@@ -18,7 +18,7 @@ class AccessControl
         $user = $request->session()->get('user');
 
         if(!$user){
-            return redirect()->route('home');
+            return redirect()->route('login');
         }
 
         if ($user->role != $role) {

@@ -21,7 +21,7 @@
 
                     <div class="mb-3">
                         <label for="" class="form-label text-secondary  ">Password</label>
-                        <input type="text" name="password" id="password" class="form-control" autocomplete="off">
+                        <input type="password" name="password" id="password" class="form-control" autocomplete="off">
                     </div>
 
                     <div class="mb-3">
