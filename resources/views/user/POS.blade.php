@@ -21,10 +21,10 @@
             <div class="col-8 col-md-8">
                 <div class="row">
                     <div class="col-12 col-md-12 mt-4" style="background-color:rgb(223, 38, 69);">
-                        <button id="foods" class="ms-5">Foods</button>
-                        <button id="nonFoodItems" class="ms-5">Non-food Items</button>
-                        <button id="miscellaneous" class="ms-5">Miscellaneous</button>
-                        <button id="officeSupplies" class="ms-5">Office Supplies</button>
+                        <button id="riceMeals" class="ms-5">Rice Meals</button>
+                        <button id="beverages" class="ms-5">Beverages</button>
+                        <button id="extras" class="ms-5">Extras</button>
+                        <button id="sides" class="ms-5">Sides</button>
 
                     </div>
                 </div>
@@ -37,6 +37,8 @@
             <div class="col-4 col-md-4" style="background-color: pink;">
                 <h3 class="mt-4">Current Order</h3>
                 <div id="currentOrderContainer"></div>
+                <h5 class="mt-5" id="subtotal">Subtotal:</h5>
+                <h5>Total:</h5>
                 <button class="btn btn-success" id="submitOrders">Order</button>
             </div>
         </div>
@@ -46,13 +48,24 @@
         crossorigin="anonymous"></script>
     <script>
         $(document).ready(function() {
+            var calculateSubtotal = function() {
+                var subtotal = 0;
+                $('#currentOrderContainer .card').each(function() {
+                    var quantity = parseInt($(this).find('.orderQuantity').text());
+                    var orderPrice = parseFloat($(this).data('orderPrice'));
+                    subtotal += quantity * orderPrice;
+                });
+                $('#subtotal').text('Subtotal: $' + subtotal.toFixed(2));
+            };
+
             // Load session data when the page loads
             $.get('/session-data', function(data) {
                 for (var i = 0; i < data.length; i++) {
                     // Capture the current item in a closure
                     (function(item) {
                         // Create a new order card for each item
-                        var orderCard = $('<div class="card">' + item.product_name + '</div>');
+                        var orderCard = $('<div class="card" id="orderCard">' + item.product_name +
+                            '</div>');
 
                         // Create a container for the delete button and position it at the top right of the order card
                         var deleteButtonContainer = $('<div></div>');
@@ -84,7 +97,8 @@
                         });
 
                         // Create a div for the price and add it to the order card
-                        var price = $('<div>Price: ' + item.price + '</div>');
+                        var price = $('<div class="orderPrice" data-orderPrice="' + item.price +
+                            '">Price: ' + item.price + '</div>');
                         orderCard.append(price);
 
                         // Create the delete button and add it to the container
@@ -105,7 +119,8 @@
                         plusButtonContainer.append(plusButton);
 
                         var quantity = $(
-                            '<span><bold>1</bold></span>'); // Initialize quantity to 1
+                            '<span class="orderQuantity" id="orderQuantity"><bold>1</bold></span>'
+                        ); // Initialize quantity to 1
                         quantityContainer.append(quantity);
 
                         // Add the buttons container, item name and quantity, and the minus and plus buttons to the order card
@@ -163,18 +178,24 @@
                         minusButton.click(function() {
                             // Decrease the order number
                             var currentQuantity = parseInt(quantity.text());
-                            if (currentQuantity >
-                                1) { // Prevent quantity from going below 1
+                            if (currentQuantity > 1) {
                                 quantity.text(currentQuantity - 1);
+                                price.text('Price: ₱' + (item.price * (
+                                    currentQuantity - 1)).toFixed(2));
+                                calculateSubtotal();
                             }
                         });
                         plusButton.click(function() {
                             // Increase the order number
                             var currentQuantity = parseInt(quantity.text());
                             quantity.text(currentQuantity + 1);
+                            price.text('Price: ₱' + (item.price * (currentQuantity +
+                                1)).toFixed(2));
+                            calculateSubtotal();
                         });
                         deleteButton.click(function() {
-                            /* Remove the order card */
+                            // Remove the order card
+                            orderCard.remove();
                         });
 
                         // Add the order card to the "Current Order" container
@@ -185,7 +206,7 @@
         });
 
         // Handle click events on category buttons
-        $('#foods, #nonFoodItems, #miscellaneous, #officeSupplies').click(function() {
+        $('#riceMeals, #beverages, #extras, #sides').click(function() {
             var category = $(this).text();
             $.get('/pos/' + category, function(data) {
                 // Clear the current items from the container
@@ -212,7 +233,7 @@
                         // Add a click event handler to the item card
                         card.click(function() {
                             // When the item card is clicked, create a new order card
-                            var orderCard = $('<div class="card">' + $(this)
+                            var orderCard = $('<div class="card" id="orderCard">' + $(this)
                                 .text() + '</div>');
 
                             // Create a container for the delete button and position it at the top right of the order card
@@ -245,7 +266,8 @@
                             });
 
                             // Create a div for the price and add it to the order card
-                            var price = $('<div>Price: ' + item.price + '</div>');
+                            var price = $('<div id="orderPrice">Price: ' + item.price +
+                                '</div>');
                             orderCard.append(price);
 
                             // Create the delete button and add it to the container
@@ -266,7 +288,8 @@
                             plusButtonContainer.append(plusButton);
 
                             var quantity = $(
-                                '<span><bold>1</bold></span>'); // Initialize quantity to 1
+                                '<span class="orderQuantity"><bold>1</bold></span>'
+                            ); // Initialize quantity to 1
                             quantityContainer.append(quantity);
 
                             // Add the buttons container, item name and quantity, and the minus and plus buttons to the order card
@@ -324,22 +347,29 @@
                             minusButton.click(function() {
                                 // Decrease the order number
                                 var currentQuantity = parseInt(quantity.text());
-                                if (currentQuantity >
-                                    1) { // Prevent quantity from going below 1
+                                if (currentQuantity > 1) {
                                     quantity.text(currentQuantity - 1);
+                                    price.text('Price: ₱' + (item.price * (
+                                        currentQuantity - 1)).toFixed(2));
+                                    calculateSubtotal();
                                 }
                             });
                             plusButton.click(function() {
                                 // Increase the order number
                                 var currentQuantity = parseInt(quantity.text());
                                 quantity.text(currentQuantity + 1);
+                                price.text('Price: ₱' + (item.price * (currentQuantity +
+                                    1)).toFixed(2));
+                                calculateSubtotal();
                             });
                             deleteButton.click(function() {
-                                /* Remove the order card */
+                                // Remove the order card
+                                orderCard.remove();
                             });
 
                             // Add the order card to the "Current Order" container
                             $('#currentOrderContainer').append(orderCard);
+                            // calculateSubtotal();
 
                             // Add the item to the session
                             $.ajax({
@@ -359,40 +389,55 @@
             });
         });
 
+
+
+
         $(document).ready(function() {
             $('#submitOrders').click(function() {
-                var orders = [];
+                var orderData = [];
+
                 $('#currentOrderContainer .card').each(function() {
-                    var order = {
-                        product_name: $(this).text().split("Price: ")[0].trim(),
-                        price: parseFloat($(this).find('div:contains("Price:")').text().split(
-                            "Price: ")[1]),
-                        quantity: parseInt($(this).find('span bold').text()),
-                        // Add other fields if necessary, e.g., code, category, description
-                    };
-                    orders.push(order);
+                    // Extract the product name directly from the text node of the card
+                    var productName = $(this).contents().filter(function() {
+                        return this.nodeType === Node.TEXT_NODE;
+                    }).text().trim();
+
+                    // Extract quantity
+                    var quantity = parseInt($(this).find('#orderQuantity').text());
+
+                    // Extract price
+                    var price = parseFloat($(this).find('#orderPrice').text().replace('Price: ',
+                        ''));
+
+                    // Include the category information obtained when clicking category buttons
+                    var category = $(this).data('category');
+
+                    orderData.push({
+                        product_name: productName,
+                        QTY: quantity,
+                        price: price,
+                        category: category
+                    });
                 });
 
-                // Send the orders to the server
                 $.ajax({
                     url: '/save-orders',
-                    method: 'POST',
+                    type: 'POST',
                     data: {
-                        _token: $('meta[name="csrf-token"]').attr('content'),
-                        orders: orders
+                        order: orderData,
+                        _token: $('meta[name="csrf-token"]').attr(
+                            'content') // Include the CSRF token for Laravel
                     },
                     success: function(response) {
-                        console.log(response.message); // Log the success message
-                        // Clear the session data and redirect to the POS view
-                        $.post('/clear-session', {
-                            _token: $('meta[name="csrf-token"]').attr('content')
-                        }, function(response) {
-                            console.log(response.message); // Log the success message
-                            window.location.href = '/pos';
-                        });
+                        if (response.status === 'success') {
+                            // Clear the order container or give a success message
+                            $('#currentOrderContainer').empty();
+                            alert('Order has been saved successfully!');
+                        }
                     },
                     error: function(xhr, status, error) {
-                        console.error('Failed to save orders:', error);
+                        console.log('Error: ' + error);
+                        alert('Failed to save order. Please try again.');
                     }
                 });
             });

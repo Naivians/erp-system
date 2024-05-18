@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class PosController extends Controller
 {
@@ -30,37 +31,34 @@ class PosController extends Controller
 
     public function saveOrders(Request $request)
     {
-        Log::info('Orders received:', $request->all());
+        $orderData = $request->input('order');
 
-        $orders = $request->input('orders');
-
-        foreach ($orders as $order) {
-            Log::info('Saving order:', $order);
-
-            DB::table('orders')->insert([
-                'product_name' => $order['product_name'],
-                'code' => $order['code'] ?? null,
-                'category' => $order['category'] ?? null,
-                'description' => $order['description'] ?? null,
-                'price' => $order['price'],
-                'QTY' => $order['quantity'],
-                'created_at' => now(),
+        // Prepare data for insertion
+        $insertData = [];
+        foreach ($orderData as $item) {
+            $insertData[] = [
+                'product_name' => $item['product_name'],
+                'category' => $item['category'],
+                'price' => $item['price'],
+                'created_at' => now(), // assuming you want to add timestamps
                 'updated_at' => now(),
-            ]);
+            ];
         }
 
-        return response()->json(['message' => 'Orders saved successfully']);
-    }
+        // Insert data into the orders table using query builder
+        DB::table('orders')->insert($insertData);
 
+        // Clear the session data
+        Session::forget('orders');
+
+        return response()->json(['status' => 'success']);
+    }
 
     public function clearSession(Request $request)
     {
-        Log::info('Session before clearing:', $request->session()->all());
+        // Clear the session data
+        Session::forget('session_data');
 
-        $request->session()->forget('orders');
-
-        Log::info('Session after clearing:', $request->session()->all());
-
-        return response()->json(['message' => 'Session cleared successfully']);
+        return response()->json(['success' => true]);
     }
 }

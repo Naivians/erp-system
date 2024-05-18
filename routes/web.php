@@ -9,29 +9,12 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
 
+
 // home
-<<<<<<< HEAD
-
-=======
->>>>>>> dc8a7f142a83a9f5bd2b20e3888cff70e9be2100
-Route::get('/', [HomeController::class, 'index'])->name('home');
-
-// admin
-Route::middleware(['check.role:1'])->group(function () {
-<<<<<<< HEAD
-    Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('Admins.home')->middleware('check.role:1');
-});
-
-// user
-Route::middleware(['check.role:0'])->group(function () {
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')->middleware('check.role:0');
-
 Route::get('/',[HomeController::class, 'index'])->name('login');
 
 // admin
 Route::middleware(['check.role:1'])->group(function () {
-=======
->>>>>>> dc8a7f142a83a9f5bd2b20e3888cff70e9be2100
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('Admins.home');
     // users
     Route::get('/admin/user', [UserController::class, 'index'])->name('Admins.user');
@@ -55,11 +38,7 @@ Route::middleware(['check.role:1'])->group(function () {
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-<<<<<<< HEAD
     Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home');
-=======
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home')
->>>>>>> dc8a7f142a83a9f5bd2b20e3888cff70e9be2100
     Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
     Route::get('/pos/{category}', [PosController::class, 'showCategory']);
     Route::post('/add-to-session', [PosController::class, 'addToSession']);
@@ -71,11 +50,3 @@ Route::middleware(['check.role:0'])->group(function (){
 // auth
 Route::post('/login', [AuthController::class, 'authUser'])->name('Logins.auth');
 Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
-<<<<<<< HEAD
-Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
-Route::post('/login',[AuthController::class, 'authUser'])->name('Logins.auth');
-Route::get('/logout',[AuthController::class, 'logout'])->name('Logins.logout');
-});
-=======
-
->>>>>>> dc8a7f142a83a9f5bd2b20e3888cff70e9be2100
