@@ -4,60 +4,54 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Validator;
 
 class PosController extends Controller
 {
-
-    public function showCategory($category)
+    public function showProductsByCategory($category)
     {
-        $products = DB::table('products')->where('category', $category)->get();
+        $products = DB::table('products')
+            ->where('category', $category)
+            ->get();
+
         return response()->json($products);
     }
 
-    public function addToSession(Request $request)
+    public function updateSession(Request $request)
     {
-        $request->session()->push('products', $request->product);
+        $orderData = $request->input('order');
+        $request->session()->put('currentOrder', $orderData);
+
         return response()->json(['success' => true]);
     }
 
-    // app/Http/Controllers/ProductController.php
     public function getSessionData(Request $request)
     {
-        return response()->json($request->session()->get('products', []));
+        $orderData = $request->session()->get('currentOrder', []);
+        return response()->json($orderData);
     }
 
-    public function saveOrders(Request $request)
+    public function placeOrder(Request $request)
     {
+        // Retrieve the order data from the request
         $orderData = $request->input('order');
 
-        // Prepare data for insertion
-        $insertData = [];
+        // Process the order data and save it to the 'orders' table
         foreach ($orderData as $item) {
-            $insertData[] = [
+            $product = DB::table('products')->where('product_name', $item['product_name'])->first();
+
+            DB::table('orders')->insert([
                 'product_name' => $item['product_name'],
-                'category' => $item['category'],
+                'code' => $product->code,
+                'category' => $product->category,
                 'price' => $item['price'],
-                'created_at' => now(), // assuming you want to add timestamps
+                'QTY' => $item['quantity'],
+                'created_at' => now(),
                 'updated_at' => now(),
-            ];
+            ]);
         }
 
-        // Insert data into the orders table using query builder
-        DB::table('orders')->insert($insertData);
-
         // Clear the session data
-        Session::forget('orders');
-
-        return response()->json(['status' => 'success']);
-    }
-
-    public function clearSession(Request $request)
-    {
-        // Clear the session data
-        Session::forget('session_data');
+        $request->session()->forget('currentOrder');
 
         return response()->json(['success' => true]);
     }

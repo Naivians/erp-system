@@ -38,13 +38,11 @@ Route::middleware(['check.role:1'])->group(function () {
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-    Route::get('/user/home', [HomeController::class, 'userHome'])->name('Users.home');
-    Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS');
-    Route::get('/pos/{category}', [PosController::class, 'showCategory']);
-    Route::post('/add-to-session', [PosController::class, 'addToSession']);
-    Route::get('/session-data', [PosController::class, 'getSessionData']);
-    Route::post('/save-orders', [PosController::class, 'saveOrders'])->name('Users.orders');
-    Route::post('/clear-session', [PosController::class, 'clearSession'])->name('Users.sessions');
+    Route::get('/pos', [HomeController::class, 'userPOS'])->name('Users.POS');
+    Route::get('/pos/{category}', [PosController::class, 'showProductsByCategory'])->name('Users.category');
+    Route::post('/update-session', [PosController::class, 'updateSession'])->name('pos.update-session');
+    Route::get('/session-data', [PosController::class, 'getSessionData'])->name('pos.session-data');
+    Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
 });
 
 // auth

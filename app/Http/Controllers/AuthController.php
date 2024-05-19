@@ -36,7 +36,7 @@ class AuthController extends Controller
             if($user->role == 1){
                 return redirect()->route('Admins.home');
             }else{
-                return redirect()->route('Users.home');
+                return redirect()->route('Users.POS');
             }
         } else {
             return redirect()->back()->with('error', 'username and password is incorrect');
