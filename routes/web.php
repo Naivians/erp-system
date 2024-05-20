@@ -48,6 +48,7 @@ Route::middleware(['check.role:0'])->group(function (){
     Route::post('/update-session', [PosController::class, 'updateSession'])->name('pos.update-session');
     Route::get('/session-data', [PosController::class, 'getSessionData'])->name('pos.session-data');
     Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
+    Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
 });
 
 // auth
