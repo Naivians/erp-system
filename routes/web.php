@@ -36,7 +36,7 @@ Route::middleware(['check.role:1'])->group(function () {
 
 });
 
-//  user
+//user
 Route::middleware(['check.role:0'])->group(function (){
     Route::get('/pos', [HomeController::class, 'userPOS'])->name('Users.POS');
     Route::get('/pos/{category}', [PosController::class, 'showProductsByCategory'])->name('Users.category');
