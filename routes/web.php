@@ -9,6 +9,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
 
+
 // home
 Route::get('/', [HomeController::class, 'index'])->name('login');
 
@@ -50,4 +51,3 @@ Route::middleware(['check.role:0'])->group(function (){
 // auth
 Route::post('/login', [AuthController::class, 'authUser'])->name('Logins.auth');
 Route::get('/logout', [AuthController::class, 'logout'])->name('Logins.logout');
-
