@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('stockin', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
             $table->string('category')->nullable();
+            $table->string('beg_inv')->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->float('price')->default(0);

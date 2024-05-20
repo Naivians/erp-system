@@ -28,9 +28,6 @@ class AuthController extends Controller
         $user = User::where('username', $request->username)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
-            // check for role number
-            // 0 = user
-            // 1 = admin
             $request->session()->put('user', $user);
 
             if($user->role == 1){
