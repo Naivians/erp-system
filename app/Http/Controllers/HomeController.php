@@ -12,11 +12,6 @@ class HomeController extends Controller
         return view('index');
     }
 
-    function userHome()
-    {
-        return view('user.index');
-    }
-
     function adminHome()
     {
         return view('admin.dashboard');

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('inventories', function (Blueprint $table) {
             $table->id();
+            $table->string('code');
             $table->string('category')->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
@@ -23,6 +24,7 @@ return new class extends Migration
             $table->float('stockout')->default(0);
             $table->float('end_inv')->default(0);
             $table->float('total_amount')->default(0);
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }
