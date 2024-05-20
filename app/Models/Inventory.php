@@ -9,6 +9,7 @@ class Inventory extends Model
 {
     use HasFactory;
     protected $fillable = [
+        'code',
         'category',
         'name',
         'description',
@@ -19,5 +20,6 @@ class Inventory extends Model
         'stockout',
         'end_inv',
         'total_amount',
+        'remarks',
     ];
 }

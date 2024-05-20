@@ -45,10 +45,12 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully deleted account'
-        ]);
+
+        if(!$user){
+            return redirect()->back()->with('error', 'Failed to save record');
+        }
+
+        return redirect()->route('Admins.user')->with('success', 'Successfully deleted account');
     }
 
     function edit($id)
@@ -59,7 +61,7 @@ class UserController extends Controller
         if (!$user) {
             return redirect()->back()->with('error', 'Account ID do not exist');
         } else {
-            return view('admin.user', ['editUser' => $user, 'edited' => true, 'users' => User::orderBy('id', 'desc')->get()]);
+            return view('admin.user', ['editUser' => $user, 'edited' => true, 'users' => User::paginate(10)]);
         }
     }
 

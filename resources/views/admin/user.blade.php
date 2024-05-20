@@ -42,7 +42,7 @@
                                         placeholder="name" value="{{ $editUser->name }}" required>
                                 </div>
                             </div>
-                            <input type="hidden" name="user_id" value="{{$editUser->id}}">
+                            <input type="hidden" name="user_id" value="{{ $editUser->id }}">
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="" class="form-label text-secondary">Username</label>
@@ -87,23 +87,20 @@
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="" class="form-label text-secondary">Name</label>
-                                    <input type="text" name="name" id="name" class="form-control"
-                                         required>
+                                    <input type="text" name="name" id="name" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="" class="form-label text-secondary">Username</label>
-                                    <input type="text" name="username" id="username" class="form-control"
-                                         required>
+                                    <input type="text" name="username" id="username" class="form-control" required>
                                 </div>
                             </div>
 
                             <div class="col-md-2">
                                 <div class="mb-3">
                                     <label for="" class="form-label text-secondary">Password</label>
-                                    <input type="password" name="password" id="password" class="form-control"
-                                         required>
+                                    <input type="password" name="password" id="password" class="form-control" required>
                                 </div>
                             </div>
 
@@ -155,7 +152,7 @@
                                 @if ($user->role == 1)
                                     <span>Admin</span>
                                 @else
-                                <span>Cashier</span>
+                                    <span>Cashier</span>
                                 @endif
                             </td>
                             <td class="text-wrap">{{ $user->password }}</td>
@@ -167,16 +164,21 @@
                                     </a>
 
                                 </span>
-                                <span onclick='deleteUser({{ $user->id }})'><i
+                                {{-- <span onclick='deleteUser({{ $user->id }})'><i
                                         class='bx bx-trash btn btn-outline-danger'>
-                                    </i></span>
+                                    </i></span> --}}
+
+                                <a href="{{ route('Admins.destroy', ['id' => $user->id]) }}"
+                                    class="text-decoration-none text-dark">
+                                    <i class='bx bx-trash btn btn-outline-danger'></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
             <div class="d-flex align-items-center justify-content-center mt-5">
-                {{$users->links()}}
+                {{ $users->links() }}
             </div>
         </div>
     </div>

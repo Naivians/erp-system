@@ -39,7 +39,7 @@ class CategoryController extends Controller
     {
         try {
             $category = Category::findOrFail($id);
-            return view('admin.category', ['category' => $category, 'edited' => true, 'categories' => Category::orderBy('id', 'desc')->get()]);
+            return view('admin.category', ['category' => $category, 'edited' => true, 'categories' => Category::paginate(5)]);
         } catch (ModelNotFoundException $e) {
             return redirect()->back()->with('error', 'Category ID does not exist');
         }
@@ -68,15 +68,9 @@ class CategoryController extends Controller
         $user->delete();
 
         if(!$user){
-            return response()->json([
-                'status' => 404,
-                'message' => 'Failed to delete catagory'
-            ]);
+            return redirect()->back()->with('error', 'Failed to save record');
         }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Successfully deleted account'
-        ]);
+        return redirect()->route('Admin.category')->with('success', 'Successfully deleted account');
     }
 }

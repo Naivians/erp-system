@@ -96,10 +96,10 @@
                                     </a>
 
                                 </span>
-                                <span onclick='deleteCategory({{ $category->id }})'><i
-                                        class='bx bx-trash btn btn-outline-danger'>
-                                    </i>
-                                </span>
+
+                                <a  href="{{ route('Admins.deleteCategory', ['id' => $category->id]) }}" class="text-decoration-none text-dark">
+                                    <i class='bx bx-trash btn btn-outline-danger'></i>
+                                </a>
                             </td>
                         </tr>
                     @endforeach

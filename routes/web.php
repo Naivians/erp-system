@@ -11,7 +11,7 @@ use App\Http\Controllers\InventoryController;
 
 
 // home
-Route::get('/',[HomeController::class, 'index'])->name('login');
+Route::get('/', [HomeController::class, 'index'])->name('login');
 
 // admin
 Route::middleware(['check.role:1'])->group(function () {
@@ -27,22 +27,25 @@ Route::middleware(['check.role:1'])->group(function () {
     // categories
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('Admin.category');
     Route::post('/admin/create', [CategoryController::class, 'store'])->name('Admins.storeCategory');
-    Route::get('/admin/{id}/edit', [CategoryController::class, 'edit'])->name('Admins.editCategory');
+    Route::get('/admin/{id}', [CategoryController::class, 'edit'])->name('Admins.editCategory');
     Route::put('/admin/update', [CategoryController::class, 'update'])->name('Admins.updateCategory');
     Route::get('/deleteCategory/{id}', [CategoryController::class, 'destroy'])->name('Admins.deleteCategory');
 
     // inventory
     Route::get('/admin/inventory/home', [InventoryController::class, 'index'])->name('Admins.InventoryHome');
-
+    Route::post('/admin/inventory/register', [InventoryController::class, 'store'])->name('Admins.InventoryStore');
+    Route::get('/deleteInventory/{id}', [InventoryController::class, 'destroy'])->name('Admins.InventoryDestroy');
+    Route::get('/admin/{id}/edit', [InventoryController::class, 'edit'])->name('Admins.InventoryEdit');
 });
 
 // user
 Route::middleware(['check.role:0'])->group(function (){
-    Route::get('/pos', [HomeController::class, 'userPOS'])->name('Users.POS');
-    Route::get('/pos/{category}', [PosController::class, 'showProductsByCategory'])->name('Users.category');
-    Route::post('/update-session', [PosController::class, 'updateSession'])->name('pos.update-session');
-    Route::get('/session-data', [PosController::class, 'getSessionData'])->name('pos.session-data');
-    Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
+    Route::get('/pos', [HomeController::class, 'userPos'])->name('user.POS'); // naka direct na to sa POS mo ahh kapag login
+    Route::get('/pos/{category}', [PosController::class, 'showCategory']);
+    Route::post('/add-to-session', [PosController::class, 'addToSession']);
+    Route::get('/session-data', [PosController::class, 'getSessionData']);
+    Route::post('/save-orders', [PosController::class, 'saveOrders'])->name('Users.orders');
+    Route::post('/clear-session', [PosController::class, 'clearSession'])->name('Users.sessions');
 });
 
 // auth

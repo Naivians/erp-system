@@ -29,6 +29,10 @@
     background-color: #f4f4f4;
 }
 
+.sidebar.move{
+    left: 0;
+}
+
 /* accordion */
 .accordion-button:not(.collapsed){
     background-color: #f4f4f4 !important;
@@ -55,9 +59,7 @@ button:focus:not(:focus-visible){
     outline: none !important;
 }
 
-.sidebar.move{
-    left: 0;
-}
+
 
 .sidebar ul{
     margin: 0;
