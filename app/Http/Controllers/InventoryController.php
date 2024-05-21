@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class InventoryController extends Controller
 {
     function index(){
-        return view('admin.inventory.index', ['inventories' => Inventory::paginate(10), 'categories' => Category::all()]);
+        return view('admin.checklist', ['inventories' => Inventory::paginate(10), 'categories' => Category::all()]);
     }
 
     function store(Request $request){

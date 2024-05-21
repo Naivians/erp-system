@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('code')->nullable();
             $table->string('category')->nullable();
-            $table->string('beg_inv')->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->float('price')->default(0);
+            $table->string('beg_inv')->nullable();
             $table->float('stocks')->default(0);
             $table->float('total_amount')->default(0);
             $table->timestamps();

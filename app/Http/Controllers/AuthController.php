@@ -33,7 +33,7 @@ class AuthController extends Controller
             if($user->role == 1){
                 return redirect()->route('Admins.InventoryHome');
             }else{
-                return redirect()->route('User.POS');
+                return redirect()->route('Users.POS');
             }
         } else {
             return redirect()->back()->with('error', 'username and password is incorrect');

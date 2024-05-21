@@ -8,7 +8,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\InventoryController;
-
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\StockinController;
 
 // home
 Route::get('/', [HomeController::class, 'index'])->name('login');
@@ -36,6 +37,18 @@ Route::middleware(['check.role:1'])->group(function () {
     Route::post('/admin/inventory/register', [InventoryController::class, 'store'])->name('Admins.InventoryStore');
     Route::get('/deleteInventory/{id}', [InventoryController::class, 'destroy'])->name('Admins.InventoryDestroy');
     Route::get('/admin/{id}/edit', [InventoryController::class, 'edit'])->name('Admins.InventoryEdit');
+
+    // stockin
+    Route::get('/admin/inventory/stockin', [StockinController::class, 'index'])->name('Admins.InventoryStockinIndex');
+    Route::get('/admin/inventory/stocklist', [StockinController::class, 'stocklist'])->name('Admins.InventoryStockList');
+    Route::post('/stockin/saveForm', [StockinController::class, 'saveForm'])->name('Admins.InventoryStockinCreate');
+
+    // /stockin/saveForm
+
+    // search
+    Route::get('/searchItemCode', [SearchController::class, 'codeSearch'])->name('Admins.search');
+    Route::get('/search/refresh', [SearchController::class, 'refresh'])->name('Admins.refresh');
+    Route::get('/deleteItemcode/{itemCode}', [SearchController::class, 'destroy'])->name('Admins.searchDestroy');
 });
 
 //users

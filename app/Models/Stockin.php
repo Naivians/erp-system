@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Stockin extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'code',
+        'category',
+        'name',
+        'description',
+        'price',
+        'beg_inv',
+        'stocks',
+        'total_amount',
+    ];
 }

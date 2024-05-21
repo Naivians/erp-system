@@ -208,8 +208,6 @@
                                         <i class='bx bx-trash btn btn-outline-danger'></i>
                                     </a>
                                 </span>
-
-
                             </td>
                         </tr>
                     @endforeach

@@ -41,13 +41,59 @@
             <i class='bx bxs-category-alt fs-3 me-2 text-danger'></i>
             Category</a>
 
-        <a href="#" class="text-dark mt-2 d-flex align-items-center">
-            <i class='bx bxs-package fs-3 me-2 text-danger'></i>
-            Stock In</a>
+        <div class="accordion" id="ins">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#stockin" aria-expanded="true" aria-controls="stockin">
+                        <i class='bx bxs-spreadsheet fs-3 me-2 text-danger'></i>
+                        Stock In
+                    </button>
+                </h2>
+                <div id="stockin" class="accordion-collapse collapse" data-bs-parent="#ins">
+                    <div class="accordion-body">
 
-        <a href="#" class="text-dark mt-2 d-flex align-items-center">
-            <i class='bx bxs-package fs-3 me-2 text-danger'></i>
-            Stock Out</a>
+                        <a href="{{ route('Admins.InventoryStockList') }}"
+                        class="text-dark mt-2 d-flex align-items-center">
+                        <i class='bx bxs-package fs-3 me-2 text-danger'></i>
+                        Stocklist </a>
+
+                        <a href="{{ route('Admins.InventoryStockinIndex') }}"
+                            class="text-dark mt-2 d-flex align-items-center">
+                            <i class='bx bxs-package fs-3 me-2 text-danger'></i>
+                            Stockin form </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="accordion my-2" id="out">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button text-dark" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#outs" aria-expanded="true" aria-controls="outs">
+                        <i class='bx bxs-spreadsheet fs-3 me-2 text-danger'></i>
+                        Stock Out
+                    </button>
+                </h2>
+                <div id="outs" class="accordion-collapse collapse" data-bs-parent="#out">
+                    <div class="accordion-body">
+
+                        <a href="{{ route('Admins.InventoryStockinIndex') }}"
+                        class="text-dark mt-2 d-flex align-items-center">
+                        <i class='bx bxs-package fs-3 me-2 text-danger'></i>
+                        Stockout list </a>
+
+                        <a href="{{ route('Admins.InventoryStockinIndex') }}"
+                            class="text-dark mt-2 d-flex align-items-center">
+                            <i class='bx bxs-package fs-3 me-2 text-danger'></i>
+                            Stockout form </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
