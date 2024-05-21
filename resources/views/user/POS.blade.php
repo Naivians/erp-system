@@ -15,6 +15,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <style>
         .itemsCard {
@@ -53,10 +54,31 @@
         .delete-btn {
             margin-left: 10px;
         }
+
+        .header {
+            background-color: #f1f1f1;
+            text-align: start;
+            padding: 10px;
+        }
+
+        .header a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: gray;
+        }
+
+        .header a:hover {
+            color: black;
+        }
     </style>
 </head>
 
 <body>
+    <div class="header">
+        <a class="ms-5" href="{{ route('Users.orders') }}">Transaction History</a>
+        <a href="{{ route('Users.POS') }}">Point Of Sale</a>
+    </div>
+
     <div class="container-fluid" style="Background-color:rgb(169, 169, 255);">
         <div class="row">
             <div class="col-8 col-md-8">
