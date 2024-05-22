@@ -4,14 +4,17 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
+<<<<<<< HEAD
         Schema::create('orders', function (Blueprint $table) {
+=======
+        Schema::table('orders', function (Blueprint $table) {
+>>>>>>> 2dade71d450ca7c500175aa0a6d2d79fe5155b34
             $table->bigInteger('order_id');
             $table->string('product_name');
             $table->string('code');
@@ -21,6 +24,7 @@ return new class extends Migration
             $table->string('QTY');
         });
     }
+
 
     /**
      * Reverse the migrations.
