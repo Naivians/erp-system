@@ -25,7 +25,7 @@ class AccessControl
             if ($user->role == 1) {
                 return redirect()->route('Admins.home');
             } elseif ($user->role == 0) {
-                return redirect()->route('Users.home');
+                return redirect()->route('Users.POS');
             }
         }
 

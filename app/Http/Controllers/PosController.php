@@ -67,6 +67,7 @@ class PosController extends Controller
         $orders = DB::table('orders')
             ->select(DB::raw('DATE(created_at) as created_at'), 'order_id', 'product_name', 'QTY', DB::raw('SUM(price * QTY) as total_price'))
             ->groupBy('order_id', 'created_at', 'product_name', 'QTY')
+            ->orderBy('order_id', 'desc')
             ->get();
 
         // Group orders by order_id
@@ -84,5 +85,4 @@ class PosController extends Controller
 
         return view('user.transactionHistory', ['groupedOrders' => $paginator]);
     }
-
 }
