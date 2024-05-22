@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('stockout', function (Blueprint $table) {
             $table->id();
+            $table->string('code')->nullable();
             $table->string('category')->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();

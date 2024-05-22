@@ -47,7 +47,7 @@ function displayData(products) {
                         <td>${item.description}</td>
                         <td>${item.price}</td>
                         <td class="d-flex justify-content-center">
-                            <input type="text" name="qty[]" value="${item.qty}" class="form-control text-center" style="width: 50px;">
+                            <input type="text" name="qty[]" value="${item.qty}" class="form-control text-center" style="width: 50px;"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                             <input type="hidden" name="category[]" value="${item.category}">
                             <input type="hidden" name="name[]" value="${item.name}">
                             <input type="hidden" name="price[]" value="${item.price}">
@@ -257,12 +257,10 @@ function deleteCategory(id) {
 }
 
 // deleteInventory
-function deleteInventory(id) {
-    var redirects = "{{ route('Admins.InventoryHome')}}";
-
+function deleteInventory(code) {
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        text: "All Data with this code from stockin, stockout and from this table will be deleted forever",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -271,30 +269,22 @@ function deleteInventory(id) {
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: "/deleteInventory/" + id,
+                url: "/deleteInventory/" + code,
                 method: "GET",
                 data: {
                     _token: csrfToken, // Include CSRF token as a parameter
                 },
                 success: (res) => {
-                    if (res.status != 200) {
+                    if (res.status === 200) {
+                        window.location.href = res.url;
+                    } else {
                         Swal.fire({
                             icon: "error",
-                            title: "Oops...",
-                            text: res.message,
-                        });
-                    } else {
-                        setInterval(function () {
-                            window.location.reload();
-                        }, 1500);
-                        Swal.fire({
-                            position: "center",
-                            icon: "success",
                             title: res.message,
-                            showConfirmButton: false,
-                            timer: 1500,
                         });
                     }
+
+                    console.log(res);
                 },
                 error: function (xhr, status, error) {
                     // Handle error response

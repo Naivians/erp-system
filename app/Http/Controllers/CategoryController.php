@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -28,7 +29,7 @@ class CategoryController extends Controller
             'category' => $request->category
         ]);
 
-        if(!$res){
+        if (!$res) {
             return redirect()->back()->with('error', 'Failed to save category!');
         }
 
@@ -57,20 +58,31 @@ class CategoryController extends Controller
             } else {
                 return redirect()->route('Admin.category')->with('success', 'Successfully update category.');
             }
-        }else{
+        } else {
             return redirect()->back()->with('error', 'Category field is required!');
         }
     }
 
-    function destroy($id)
+    public function destroy($category)
     {
-        $user = Category::findOrFail($id);
-        $user->delete();
+        DB::beginTransaction();
 
-        if(!$user){
-            return redirect()->back()->with('error', 'Failed to save record');
+        try {
+            $res1 = DB::table('categories')->where('category', $category)->delete();
+            $res2 = DB::table('inventories')->where('category', $category)->delete();
+            $res2 = DB::table('stockins')->where('category', $category)->delete();
+            // $res2 = DB::table('stockout')->where('category', $category)->delete();
+
+            if ($res1 === 0 && $res2 === 0) {
+                DB::rollBack();
+                return redirect()->back()->with('error', 'Failed to delete category');
+            }
+
+            DB::commit();
+            return redirect()->route('Admin.category')->with('success', 'Successfully deleted category');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'An error occurred: ' . $e->getMessage());
         }
-
-        return redirect()->route('Admin.category')->with('success', 'Successfully deleted account');
     }
 }

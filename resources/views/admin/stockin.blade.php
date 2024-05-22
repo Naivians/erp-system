@@ -138,6 +138,7 @@
         <div class="card">
             <div class="card-body">
                 <button type="button" class="btn btn-success" onclick="saveStocks()">Submit</button>
+                <a href="{{route('Admins.InventoryStockList')}}" class="btn btn-danger">Back</a>
             </div>
         </div>
         </form>

@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->float('price')->default(0);
-            $table->string('beg_inv')->nullable();
             $table->float('stocks')->default(0);
             $table->float('total_amount')->default(0);
             $table->timestamps();

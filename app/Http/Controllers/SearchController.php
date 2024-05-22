@@ -10,6 +10,38 @@ use Illuminate\Support\Facades\Log;
 
 class SearchController extends Controller
 {
+    public function search(Request $request)
+    {
+        // Retrieve the search query from the request
+        $query = $request->get('query');
+
+        // Dynamically create an instance of the specified model
+        $modelClass = "App\Models\\" . $request->model;
+
+        if (!class_exists($modelClass)) {
+            return response()->json(['error' => 'Model not found'], 404);
+        }
+
+        $modelInstance = app($modelClass);
+
+        // Build and execute the search query
+        $results = $modelInstance->where(function ($queryBuilder) use ($query, $modelInstance) {
+            // Get all column names of the model's table
+            $columns = $modelInstance->getConnection()->getSchemaBuilder()->getColumnListing($modelInstance->getTable());
+
+            // Add a condition to search each column
+            foreach ($columns as $column) {
+                $queryBuilder->orWhere($column, 'like', '%' . $query . '%');
+            }
+        })
+            ->take(10) // Limit the results to 10
+            ->get();
+
+        // Return the search results as a JSON response
+        return response()->json($results);
+    }
+
+
     function codeSearch(Request $request)
     {
         $code = $request->input('query');
@@ -27,7 +59,6 @@ class SearchController extends Controller
                     'status' => 419,
                     'message' => "Product code already exists!"
                 ]);
-
             } else {
                 // Product doesn't exist, add it to the cart
                 $cart[$code] = [
@@ -78,10 +109,10 @@ class SearchController extends Controller
 
         $itemCode = strtolower($itemCode);
 
-            //   return response()->json([
-            //     'status' => 500,
-            //     'message' => $itemCode
-            // ]);
+        //   return response()->json([
+        //     'status' => 500,
+        //     'message' => $itemCode
+        // ]);
 
         if (isset($cart[$itemCode])) {
             unset($cart[$itemCode]); // Remove the item from the array

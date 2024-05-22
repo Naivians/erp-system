@@ -29,27 +29,40 @@ Route::middleware(['check.role:1'])->group(function () {
     Route::get('/admin/category', [CategoryController::class, 'index'])->name('Admin.category');
     Route::post('/admin/create', [CategoryController::class, 'store'])->name('Admins.storeCategory');
     Route::get('/admin/{id}', [CategoryController::class, 'edit'])->name('Admins.editCategory');
-    Route::put('/admin/update', [CategoryController::class, 'update'])->name('Admins.updateCategory');
-    Route::get('/deleteCategory/{id}', [CategoryController::class, 'destroy'])->name('Admins.deleteCategory');
+    Route::put('/admin/updateCategory', [CategoryController::class, 'update'])->name('Admins.updateCategory');
+    Route::get('/deleteCategory/{name}', [CategoryController::class, 'destroy'])->name('Admins.deleteCategory');
 
     // inventory
     Route::get('/admin/inventory/home', [InventoryController::class, 'index'])->name('Admins.InventoryHome');
     Route::post('/admin/inventory/register', [InventoryController::class, 'store'])->name('Admins.InventoryStore');
-    Route::get('/deleteInventory/{id}', [InventoryController::class, 'destroy'])->name('Admins.InventoryDestroy');
+    Route::get('/deleteInventory/{code}', [InventoryController::class, 'destroy'])->name('Admins.InventoryDestroy');
     Route::get('/admin/{id}/edit', [InventoryController::class, 'edit'])->name('Admins.InventoryEdit');
+    Route::put('/admin/update', [InventoryController::class, 'update'])->name('Admins.InventoryUpdate');
 
     // stockin
     Route::get('/admin/inventory/stockin', [StockinController::class, 'index'])->name('Admins.InventoryStockinIndex');
     Route::get('/admin/inventory/stocklist', [StockinController::class, 'stocklist'])->name('Admins.InventoryStockList');
     Route::post('/stockin/saveForm', [StockinController::class, 'saveForm'])->name('Admins.InventoryStockinCreate');
+    Route::get('/stockin/{id}/destroy', [StockinController::class, 'destroy'])->name('Admins.StockinsDestroy');
+    Route::get('/stockin/{id}/edit', [StockinController::class, 'edit'])->name('Admins.StockinsEdit');
+    Route::put('/stockin/update', [StockinController::class, 'update'])->name('Admins.InventoryStockinsUpdate');
 
-    // /stockin/saveForm
+    // Stockout
+
+    // Route::get('/admin/inventory/Stockout', [StockOutController::class, 'index'])->name('Admins.InventoryStockOutIndex');
+    // Route::get('/admin/inventory/stocklist', [StockinController::class, 'stocklist'])->name('Admins.InventoryStockList');
+    // Route::post('/stockin/saveForm', [StockinController::class, 'saveForm'])->name('Admins.InventoryStockinCreate');
+    // Route::get('/stockin/{id}/destroy', [StockinController::class, 'destroy'])->name('Admins.StockinsDestroy');
+    // Route::get('/stockin/{id}/edit', [StockinController::class, 'edit'])->name('Admins.StockinsEdit');
+    // Route::put('/stockin/update', [StockinController::class, 'update'])->name('Admins.InventoryStockinsUpdate');
 
     // search
     Route::get('/searchItemCode', [SearchController::class, 'codeSearch'])->name('Admins.search');
     Route::get('/search/refresh', [SearchController::class, 'refresh'])->name('Admins.refresh');
     Route::get('/deleteItemcode/{itemCode}', [SearchController::class, 'destroy'])->name('Admins.searchDestroy');
+    Route::get('/searchAll', [SearchController::class, 'search'])->name('Search.All');
 });
+
 
 //users
 Route::middleware(['check.role:0'])->group(function (){
@@ -59,7 +72,6 @@ Route::middleware(['check.role:0'])->group(function (){
     Route::get('/session-data', [PosController::class, 'getSessionData'])->name('pos.session-data');
     Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
     Route::get('/orders-table', [PosController::class, 'getOrders'])->name('Users.orders');
-
 });
 
 // auth

@@ -97,7 +97,7 @@
 
                                 </span>
 
-                                <a  href="{{ route('Admins.deleteCategory', ['id' => $category->id]) }}" class="text-decoration-none text-dark">
+                                <a  href="{{ route('Admins.deleteCategory', ['name' => $category->category]) }}" class="text-decoration-none text-dark">
                                     <i class='bx bx-trash btn btn-outline-danger'></i>
                                 </a>
                             </td>

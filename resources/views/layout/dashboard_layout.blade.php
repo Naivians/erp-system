@@ -12,6 +12,8 @@
         @include('includes.bsjs')
         <script src="{{asset('assets/js/jquery.js')}}"></script>
         <script src="{{asset('assets/js/main.js')}}"></script>
+
+        @yield('scripts')
     </main>
 </body>
 </html>
