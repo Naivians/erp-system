@@ -9,6 +9,7 @@ class PosController extends Controller
 {
     public function showProductsByCategory($category)
     {
+
         $products = DB::table('products')
             ->where('category', $category)
             ->get();
