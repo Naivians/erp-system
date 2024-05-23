@@ -20,6 +20,17 @@
 
 
     <style>
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            position: relative;
+        }
+
+
         .itemsCard {
             width: 12rem;
             height: 7rem;
@@ -152,6 +163,51 @@
         .logoutBtn:active {
             transform: translate(2px, 2px);
         }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        /* Order Card */
+
+        .left-content {
+            flex-grow: 1;
+        }
+
+        .right-content {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-container {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        div::-webkit-scrollbar {
+            display: none;
+            /* Hide scroll bar in Chrome, Safari, and Opera */
+        }
+
+        .row {
+            /* ... */
+            max-height: 100vh;
+            overflow-y: scroll;
+            -ms-overflow-style: none;
+            /* Hide scroll bar in IE and Edge */
+            scrollbar-width: none;
+            /* Hide scroll bar in Firefox */
+        }
+
+        .categoryButton {
+            background: rgb(39, 36, 36);
+            border: solid rgb(39, 36, 36);
+            color: white;
+            border-radius: 10px;
+        }
     </style>
 </head>
 
@@ -179,9 +235,9 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <div class="row" style="height: 100vh;">
-            <div class="col-8 col-md-8" style="background-color: #b6b5b5;">
+    <div class="container-fluid" style="height:90vh;">
+        <div class="row">
+            <div class="col-8 col-md-8" style="background-color: #b6b5b5;flex-grow: 1;height:100vh;">
                 <div class="row">
                     <div class="col-12 col-md-12 mt-4">
                         @foreach ($categories as $category)
@@ -191,17 +247,19 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-12 mt-3" id="itemsContainer">
+                    <div class="col-12 col-md-12 mt-3" id="itemsContainer"
+                        style="flex-grow: 1; max-height:85vh; overflow-y: overlay;">
                         <!-- Products will be dynamically added here -->
                     </div>
                 </div>
             </div>
-            <div class="col-4 col-md-4" style="height: 100vh;background-color:rgb(228, 111, 111);">
+            <div class="col-4 col-md-4 d-flex flex-column"
+                style="max-height:100vh;background-color:rgb(228, 111, 111);overflow-y:overlay;">
                 <h3 class="mt-4">Current Order</h3>
                 <div id="currentOrder"></div>
                 <h5 class="mt-5" id="subtotal">Subtotal: ₱ 0.00</h5>
                 <h5 id="total">Total: ₱ 0.00</h5>
-                <button class="btn btn-success" id="submitOrder">Order</button>
+                <button class="btn btn-success mb-5" id="submitOrder">Order</button>
             </div>
         </div>
     </div>
@@ -239,18 +297,14 @@
                         .product_name + '</p>');
                     var price = $('<p class="price mb-0">Price: ₱ ' + product
                         .price + '</p>');
-                    var quantityContainer = $(
-                        '<div class="quantity-container"></div>');
-                    var minusButton = $(
-                        '<button class="btn btn-danger minus-btn">-</button>');
+                    var rightContent = $('<div class="right-content"></div>');
+                    var quantityContainer = $('<div class="quantity-container"></div>');
+                    var minusButton = $('<button class="btn btn-danger minus-btn">-</button>');
                     var quantityInput = $(
-                        '<input type="number" class="form-control quantity-input" value="1" min="1">'
-                    );
-                    var plusButton = $(
-                        '<button class="btn btn-success plus-btn">+</button>');
+                        '<input type="number" class="form-control quantity-input" value="1" min="1">');
+                    var plusButton = $('<button class="btn btn-success plus-btn">+</button>');
                     var deleteButton = $(
-                        '<button class="btn btn-danger delete-btn"><i class="fa-solid fa-xmark"></i></button>'
-                    );
+                        '<button class="btn btn-danger delete-btn"><i class="fa-solid fa-xmark"></i></button>');
 
                     leftContent.append(productName, price);
                     quantityContainer.append(minusButton, quantityInput,
@@ -323,12 +377,12 @@
                         // Clear the current items
                         $('.itemsCard').remove();
 
-                        // Append the new items based on the selected categor
+                        // Append the new items based on the selected category
                         // Click event listener to itemsCard.
+                        var cardsContainer = $(
+                            '<div class="cards-container d-flex flex-wrap"></div>');
                         $.each(data, function(index, product) {
-                            var itemCard = $(
-                                '<div class="card mt-2 itemsCard d-inline-block"></div>'
-                            );
+                            var itemCard = $('<div class="card itemsCard"></div>');
                             var itemContent = $('<div class="card-body"></div>');
                             itemContent.append('<p class="card-title">' + product
                                 .product_name + '</p>');
@@ -338,8 +392,10 @@
                             itemCard.click(function() {
                                 addToOrder(product);
                             });
-                            $('#itemsContainer').append(itemCard);
+                            cardsContainer.append(itemCard);
                         });
+                        $('#itemsContainer').append(cardsContainer);
+
 
                     },
                     error: function() {
