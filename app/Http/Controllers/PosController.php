@@ -9,7 +9,6 @@ class PosController extends Controller
 {
     public function showProductsByCategory($category)
     {
-
         $products = DB::table('products')
             ->where('category', $category)
             ->get();
@@ -64,9 +63,13 @@ class PosController extends Controller
 
     public function getOrders()
     {
-        // Get all orders
+        // Get today's date
+        $today = date('Y-m-d');
+
+        // Get all orders from today
         $orders = DB::table('orders')
             ->select(DB::raw('DATE(created_at) as created_at'), 'order_id', 'product_name', 'QTY', DB::raw('SUM(price * QTY) as total_price'))
+            ->whereDate('created_at', $today)  // Add this line
             ->groupBy('order_id', 'created_at', 'product_name', 'QTY')
             ->orderBy('order_id', 'desc')
             ->get();
