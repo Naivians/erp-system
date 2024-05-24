@@ -44,10 +44,11 @@
 
         .order-item {
             margin-bottom: 10px;
+            border: none;
         }
 
         .card-body {
-            padding: 10px;
+            padding: 5px;
         }
 
         .left-content {
@@ -82,6 +83,25 @@
 
         .header a:hover {
             color: black;
+        }
+
+        #itemsCard {
+            border-radius: 3px;
+            border: none;
+            border-color: white;
+            ransition: transform 0.2s ease-in-out;
+            box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+        }
+
+        #itemsCard:active {
+            transform: scale(0.95);
+        }
+
+
+        #itemsProductName {
+            font-weight: bold;
         }
 
         .logoutBtn {
@@ -203,10 +223,17 @@
         }
 
         .categoryButton {
-            background: rgb(39, 36, 36);
-            border: solid rgb(39, 36, 36);
-            color: white;
-            border-radius: 10px;
+            background: rgb(255, 255, 255);
+            border: solid rgb(255, 255, 255);
+            color: rgb(0, 0, 0);
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .subtotal-line {
+            border: none;
+            border-top: 3px solid #000000;
+            margin: 0;
         }
     </style>
 </head>
@@ -237,7 +264,7 @@
 
     <div class="container-fluid" style="height:90vh;">
         <div class="row">
-            <div class="col-8 col-md-8" style="background-color: #b6b5b5;flex-grow: 1;height:100vh;">
+            <div class="col-8 col-md-8" style="background-color: #d1d1d1;flex-grow: 1;height:100vh;">
                 <div class="row">
                     <div class="col-12 col-md-12 mt-4">
                         @foreach ($categories as $category)
@@ -253,13 +280,40 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4 col-md-4 d-flex flex-column"
-                style="max-height:100vh;background-color:rgb(228, 111, 111);overflow-y:overlay;">
-                <h3 class="mt-4">Current Order</h3>
-                <div id="currentOrder"></div>
-                <h5 class="mt-5" id="subtotal">Subtotal: ₱ 0.00</h5>
-                <h5 id="total">Total: ₱ 0.00</h5>
-                <button class="btn btn-success mb-5" id="submitOrder">Order</button>
+            <div class="col-4 col-md-4 d-flex flex-column position-relative"
+                style="max-height:100vh;background-color:rgb(255, 255, 255);overflow-y:overlay;">
+                <h3 class="mt-4" style="font-weight:bold;">Current Order</h3>
+                <div id="currentOrder" style="flex-grow: 1; overflow-y: auto; max-height: calc(100vh - 300px);">
+                    <!-- Order cards will be added here -->
+                </div>
+                <div class="position-absolute bottom-0 w-100 pe-3" style="height: 220px;">
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>Discount:</div>
+                        <div class="text-nowrap">
+                            <span id="discount" class="text-end">₱ 0.00</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-2">
+                        <div>Subtotal:</div>
+                        <div class="text-nowrap">
+                            <span id="subtotal" class="text-end">₱ 0.00</span>
+                        </div>
+                    </div>
+                    <div class="w-100 mb-2">
+                        <hr class="subtotal-line">
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h4>Total:</h4>
+                        <div class="text-nowrap mb-2">
+                            <h4 id="total" class="text-end">₱ 0.00</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between mb-4">
+                        <div class="text-nowrap">
+                            <button class="btn btn-success mb-5 text-end" id="submitOrder">Order</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -299,12 +353,14 @@
                         .price + '</p>');
                     var rightContent = $('<div class="right-content"></div>');
                     var quantityContainer = $('<div class="quantity-container"></div>');
-                    var minusButton = $('<button class="btn btn-danger minus-btn">-</button>');
+                    var minusButton = $(
+                        '<button class="btn btn-danger minus-btn"><i class="fa-solid fa-minus"></i></button>');
                     var quantityInput = $(
                         '<input type="number" class="form-control quantity-input" value="1" min="1">');
-                    var plusButton = $('<button class="btn btn-success plus-btn">+</button>');
+                    var plusButton = $(
+                        '<button class="btn btn-success plus-btn"><i class="fa-solid fa-plus"></i></button>');
                     var deleteButton = $(
-                        '<button class="btn btn-danger delete-btn"><i class="fa-solid fa-xmark"></i></button>');
+                        '<button class="btn btn-danger delete-btn"><i class="fa-solid fa-trash"></i></button>');
 
                     leftContent.append(productName, price);
                     quantityContainer.append(minusButton, quantityInput,
@@ -338,6 +394,16 @@
                         updateSessionData();
                     });
 
+                    // Add event listener for quantity input field
+                    quantityInput.on('input', function() {
+                        var currentQuantity = parseInt(quantityInput.val());
+                        if (currentQuantity < 1 || quantityInput.val() === '') {
+                            quantityInput.val(1); // Reset the value to 1 if it's less than 1
+                        }
+                        calculateTotals();
+                        updateSessionData();
+                    });
+
                     // Call calculateTotals after adding the order item
                     calculateTotals();
                 }
@@ -363,8 +429,8 @@
                 total =
                     subtotal; // For now, we'll assume no additional charges or deductions
 
-                $('#subtotal').text('Subtotal: ₱ ' + subtotal.toFixed(2));
-                $('#total').text('Total: ₱ ' + total.toFixed(2));
+                $('#subtotal').text(' ₱ ' + subtotal.toFixed(2));
+                $('#total').text(' ₱ ' + total.toFixed(2));
             }
 
             $('.categoryButton').click(function() {
@@ -382,13 +448,17 @@
                         var cardsContainer = $(
                             '<div class="cards-container d-flex flex-wrap"></div>');
                         $.each(data, function(index, product) {
-                            var itemCard = $('<div class="card itemsCard"></div>');
+                            var itemCard = $(
+                                '<div class="card itemsCard" id="itemsCard"></div>');
                             var itemContent = $('<div class="card-body"></div>');
-                            itemContent.append('<p class="card-title">' + product
+                            itemContent.append(
+                                '<p class="card-title" id="itemsProductName">' +
+                                product
                                 .product_name + '</p>');
                             itemContent.append('<p class="card-text">Price: ₱ ' +
                                 product.price + '</p>');
                             itemCard.append(itemContent);
+                            cardsContainer.append(itemCard);
                             itemCard.click(function() {
                                 addToOrder(product);
                             });
