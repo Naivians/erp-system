@@ -30,16 +30,10 @@
             position: relative;
         }
 
-
-        .itemsCard {
-            width: 12rem;
-            height: 7rem;
-            border: 1px solid black;
-            border-radius: 10px;
-            padding: 10px;
-            margin: 1rem;
-            margin-right: 10px;
-            text-align: center;
+        #itemsContainer {
+            flex-grow: 1;
+            max-height: 80vh;
+            overflow-y: overlay;
         }
 
         .order-item {
@@ -49,10 +43,6 @@
 
         .card-body {
             padding: 5px;
-        }
-
-        .left-content {
-            text-align: left;
         }
 
         .quantity-container {
@@ -86,10 +76,16 @@
         }
 
         #itemsCard {
+            width: 12rem;
+            height: 7rem;
+            padding: 10px;
+            margin: 1rem;
+            margin-right: 10px;
+            text-align: center;
             border-radius: 3px;
             border: none;
             border-color: white;
-            ransition: transform 0.2s ease-in-out;
+            transition: transform 0.2s ease-in-out;
             box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
             -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
             -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
@@ -194,6 +190,7 @@
 
         .left-content {
             flex-grow: 1;
+            text-align: left;
         }
 
         .right-content {
@@ -235,6 +232,1128 @@
             border-top: 3px solid #000000;
             margin: 0;
         }
+
+        @media (max-width: 1400px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 12rem !important;
+                height: 8rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.5em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 0.8em;
+            }
+
+            .quantity-container .btn {
+                font-size: 0.8em;
+            }
+
+            .delete-btn {
+                font-size: 0.8em;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 1.0em;
+            }
+
+            #submitOrder {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 1350px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 11.5rem !important;
+                height: 8rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.5em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 0.8em;
+            }
+
+            .quantity-container .btn {
+                font-size: 0.8em;
+            }
+
+            .delete-btn {
+                font-size: 0.8em;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 1.0em;
+            }
+
+            #submitOrder {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 1300px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 11rem !important;
+                height: 8rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.5em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 0.8em;
+            }
+
+            .quantity-container .btn {
+                font-size: 0.8em;
+            }
+
+            .delete-btn {
+                font-size: 0.8em;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 1.0em;
+            }
+
+            #submitOrder {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 1250px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 10.6rem !important;
+                height: 8rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.5em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 0.8em;
+            }
+
+            .quantity-container .btn {
+                font-size: 0.8em;
+            }
+
+            .delete-btn {
+                font-size: 0.8em;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 1.0em;
+            }
+
+            #submitOrder {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 1225px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 10.4rem !important;
+                height: 8rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.5em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 0.8em;
+            }
+
+            .quantity-container .btn {
+                font-size: 0.8em;
+            }
+
+            .delete-btn {
+                font-size: 0.8em;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 1.0em;
+            }
+
+            #submitOrder {
+                font-size: 0.9em;
+            }
+        }
+
+        /* Styles for large desktops */
+        @media (max-width: 1200px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 10rem !important;
+                height: 8rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.5em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 0.8em;
+            }
+
+            .quantity-container .btn {
+                font-size: 0.8em;
+            }
+
+            .delete-btn {
+                font-size: 0.8em;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 1.0em;
+            }
+
+            #submitOrder {
+                font-size: 0.9em;
+            }
+        }
+
+        @media (max-width: 1150px) {
+
+            /* Large desktop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 9.5rem !important;
+                height: 7.5rem;
+                font-size: 16px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                font-size: 13px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 12px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 12px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 5px;
+                width: 40px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 12px;
+                padding: 7px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 17px;
+            }
+
+            #submitOrder {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 1100px) {
+
+            /* Smaller desktop and laptop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 9rem !important;
+                height: 6rem;
+                font-size: 13px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 12px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 12px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 5px;
+                width: 40px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 12px;
+                padding: 7px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 17px;
+            }
+
+            #submitOrder {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 1050px) {
+
+            /* Smaller desktop and laptop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 8.5rem !important;
+                height: 6rem;
+                font-size: 11px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 12px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 10px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 4px;
+                width: 40px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 10px;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 15px;
+            }
+
+            #submitOrder {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 1000px) {
+
+            /* Smaller desktop and laptop styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 8rem !important;
+                height: 6rem;
+                font-size: 13px;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                font-size: 11px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 11px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 9px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 4px;
+                width: 40px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 9px;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 14px;
+            }
+
+            #submitOrder {
+                font-size: 12px;
+            }
+
+            .categoryButton {
+                font-size: 15px;
+            }
+        }
+
+        /* Styles for landscape tablets */
+        @media (max-width: 950px) {
+
+            /* Landscape tablet styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 7.5rem !important;
+                height: 6rem;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                font-size: 11px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 11px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 9px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 4px;
+                width: 40px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 9px;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 14px;
+            }
+
+            #submitOrder {
+                font-size: 12px;
+            }
+
+            .categoryButton {
+                font-size: 14px;
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            /* Landscape tablet styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 7rem !important;
+                height: 6rem;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                font-size: 11px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 10px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 8px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 4px;
+                width: 40px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 8px;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 12px;
+            }
+
+            #submitOrder {
+                font-size: 10px;
+            }
+
+            .categoryButton {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 850px) {
+
+            /* Landscape tablet styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 9rem !important;
+                height: 6rem;
+                padding: 10px;
+                margin: 1rem;
+                font-size: 10px;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 9px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 7px !important;
+                padding: 5px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 10px !important;
+                padding: 2px;
+                width: 30px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 7px;
+                padding: 5px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 12px;
+            }
+
+            #submitOrder {
+                font-size: 10px;
+            }
+
+            .categoryButton {
+                font-size: 12px;
+                margin-left: 30px !important;
+            }
+        }
+
+        @media (max-width: 800px) {
+
+            /* Landscape tablet styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 8.5rem !important;
+                height: 6rem;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1.3em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 9px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 8px !important;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            .quantity-input {
+                font-size: 10px !important;
+                padding: 5px;
+                padding-right: 10px;
+                width: 20px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 8px;
+                padding: 6px;
+                border-radius: 3px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 12px;
+            }
+
+            #submitOrder {
+                font-size: 12px;
+            }
+
+            .categoryButton {
+                font-size: 12px;
+                margin-left: 20px !important;
+            }
+        }
+
+        @media (max-width: 750px) {
+
+            /* Landscape tablet styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 70vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 11rem !important;
+                height: 6rem;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 8px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 7px !important;
+                padding: 5px;
+                border-radius: 2px;
+            }
+
+            .quantity-input {
+                font-size: 10px !important;
+                padding: 5px;
+                padding-right: 10px;
+                width: 20px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 7px;
+                padding: 5px;
+                border-radius: 2px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 10px;
+            }
+
+            #submitOrder {
+                font-size: 10px;
+            }
+
+            .categoryButton {
+                font-size: 10px;
+                margin-left: 18px !important;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            /* Landscape tablet styles */
+            #itemsContainer {
+                flex-grow: 1;
+                max-height: 80vh;
+                overflow-y: overlay;
+            }
+
+            #itemsCard {
+                width: 11rem !important;
+                height: 6rem;
+                padding: 10px;
+                margin: 1rem;
+                margin-right: 10px;
+                text-align: center;
+                border-radius: 3px;
+                border: none;
+                border-color: white;
+                transition: transform 0.2s ease-in-out;
+                box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -webkit-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+                -moz-box-shadow: 0px 1px 10px 6px rgba(0, 0, 0, 0.06);
+            }
+
+            #itemsCard:active {
+                transform: scale(0.95);
+            }
+
+            .currentorderText {
+                font-size: 1em;
+            }
+
+            .product-name,
+            .price {
+                font-size: 8px !important;
+            }
+
+            .quantity-container .btn {
+                font-size: 7px !important;
+                padding: 5px;
+                border-radius: 2px;
+            }
+
+            .quantity-input {
+                font-size: 10px !important;
+                padding: 5px;
+                padding-right: 10px;
+                width: 20px;
+                /* Adjust the width as needed */
+            }
+
+            .delete-btn {
+                font-size: 7px;
+                padding: 5px;
+                border-radius: 2px;
+            }
+
+            #discount,
+            #subtotal,
+            #discountText,
+            #subtotalText,
+            #total,
+            #totalText {
+                font-size: 10px;
+            }
+
+            #submitOrder {
+                font-size: 10px;
+            }
+
+            .categoryButton {
+                font-size: 10px;
+                margin-left: 20px !important;
+            }
+        }
     </style>
 </head>
 
@@ -268,33 +1387,35 @@
                 <div class="row">
                     <div class="col-12 col-md-12 mt-4">
                         @foreach ($categories as $category)
-                            <button class="ms-5 categoryButton"
-                                data-category="{{ $category->category }}">{{ $category->category }}</button>
+                            <button class="ms-5 categoryButton" data-category="{{ $category->category }}">
+                                <i class="fa-solid fa-bowl-food"></i>
+                                <!-- Replace 'icon-name' with the name of the icon you want to use -->
+                                {{ $category->category }}
+                            </button>
                         @endforeach
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-12 col-md-12 mt-3" id="itemsContainer"
-                        style="flex-grow: 1; max-height:85vh; overflow-y: overlay;">
+                    <div class="col-12 col-md-12 mt-3" id="itemsContainer">
                         <!-- Products will be dynamically added here -->
                     </div>
                 </div>
             </div>
             <div class="col-4 col-md-4 d-flex flex-column position-relative"
                 style="max-height:100vh;background-color:rgb(255, 255, 255);overflow-y:overlay;">
-                <h3 class="mt-4" style="font-weight:bold;">Current Order</h3>
+                <h3 class="mt-4 currentorderText" style="font-weight:bold;">Current Order</h3>
                 <div id="currentOrder" style="flex-grow: 1; overflow-y: auto; max-height: calc(100vh - 300px);">
                     <!-- Order cards will be added here -->
                 </div>
                 <div class="position-absolute bottom-0 w-100 pe-3" style="height: 220px;">
                     <div class="d-flex justify-content-between mb-2">
-                        <div>Discount:</div>
+                        <div id="discountText">Discount:</div>
                         <div class="text-nowrap">
                             <span id="discount" class="text-end">₱ 0.00</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mb-2">
-                        <div>Subtotal:</div>
+                        <div id="subtotalText">Subtotal:</div>
                         <div class="text-nowrap">
                             <span id="subtotal" class="text-end">₱ 0.00</span>
                         </div>
@@ -303,14 +1424,15 @@
                         <hr class="subtotal-line">
                     </div>
                     <div class="d-flex justify-content-between">
-                        <h4>Total:</h4>
+                        <h4 id="totalText">Total:</h4>
                         <div class="text-nowrap mb-2">
                             <h4 id="total" class="text-end">₱ 0.00</h4>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mb-4">
                         <div class="text-nowrap">
-                            <button class="btn btn-success mb-5 text-end" id="submitOrder">Order</button>
+                            <button class="btn btn-success mb-5 text-end w-100" id="submitOrder"><i
+                                    class="fa-solid fa-cart-shopping"></i> ORDER</button>
                         </div>
                     </div>
                 </div>
