@@ -61,32 +61,59 @@ class PosController extends Controller
     }
 
 
-    public function getOrders()
+    public function getOrders(Request $request)
     {
-        // Get today's date
-        $today = date('Y-m-d');
+        // Get the date range from the request
+        $dateFrom = $request->input('dateFrom');
+        $dateTo = $request->input('dateTo');
 
-        // Get all orders from today
-        $orders = DB::table('orders')
-            ->select(DB::raw('DATE(created_at) as created_at'), 'order_id', 'product_name', 'QTY', DB::raw('SUM(price * QTY) as total_price'))
-            ->whereDate('created_at', $today)  // Add this line
+        // Calculate order count
+        $orderCountQuery = DB::table('orders')->distinct('order_id');
+
+        // Calculate product count
+        $productCountQuery = DB::table('orders')->distinct('id');
+
+        // If date filters are set, add them to the queries
+        if ($dateFrom && $dateTo) {
+            $orderCountQuery->whereDate('created_at', '>=', $dateFrom)
+                ->whereDate('created_at', '<=', $dateTo);
+
+            $productCountQuery->whereDate('created_at', '>=', $dateFrom)
+                ->whereDate('created_at', '<=', $dateTo);
+        }
+
+        $orderCount = $orderCountQuery->count('order_id');
+        $productCount = $productCountQuery->count('product_name');
+
+        // Get all orders
+        // Start building the query
+        $query = DB::table('orders')
+            ->select(
+                DB::raw('DATE(created_at) as created_at'),
+                'order_id',
+                'product_name',
+                'QTY',
+                DB::raw('SUM(price * QTY) as total_price')
+            )
             ->groupBy('order_id', 'created_at', 'product_name', 'QTY')
-            ->orderBy('order_id', 'desc')
-            ->get();
+            ->orderBy('order_id', 'desc');
+
+        // If date filters are set, add them to the query
+        if ($dateFrom && $dateTo) {
+            $query->whereDate('created_at', '>=', $dateFrom)
+                ->whereDate('created_at', '<=', $dateTo);
+        }
+
+        // Execute the query
+        $orders = $query->get();
 
         // Group orders by order_id
         $grouped = $orders->groupBy('order_id');
 
-        // Manually paginate the results
-        $perPage = 5;
-        $currentPage = request()->get('page', 1);
-        $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-            $grouped->forPage($currentPage, $perPage),
-            $grouped->count(),
-            $perPage,
-            $currentPage
-        );
-
-        return view('user.transactionHistory', ['groupedOrders' => $paginator]);
+        return view('user.transactionHistory', [
+            'groupedOrders' => $grouped,
+            'orderCount' => $orderCount,
+            'productCount' => $productCount
+        ]);
     }
 }

@@ -109,6 +109,266 @@
         .logoutBtn:active {
             transform: translate(2px, 2px);
         }
+
+        #search-btn {
+            color: white;
+        }
+
+        @media (max-width: 1400px) {
+
+            #orderCount,
+            #productCount {
+                font-size: 14px;
+            }
+
+            #search-btn {
+                font-size: 11px;
+            }
+
+            #search-btn i {
+                font-size: 11px;
+            }
+
+            label.me-1#dateFrom {
+                font-size: 14px;
+            }
+
+            input.me-4.date#dateFrom {
+                font-size: 14px;
+                /* padding: 6px 14px; */
+                width: 110px;
+                margin-right: 8px !important;
+            }
+
+            label[for="dateTo"] {
+                font-size: 14px;
+            }
+
+            input.date#dateTo {
+                font-size: 14px;
+                /* padding: 6px 12px; */
+                width: 110px;
+            }
+        }
+
+        @media (max-width: 1200px) {
+
+            #orderCount,
+            #productCount {
+                font-size: 14px;
+            }
+
+            #search-btn {
+                font-size: 11px;
+            }
+
+            #search-btn i {
+                font-size: 11px;
+            }
+
+            label.me-1#dateFrom {
+                font-size: 14px;
+            }
+
+            input.me-4.date#dateFrom {
+                font-size: 14px;
+                /* padding: 6px 14px; */
+                width: 110px;
+                margin-right: 8px !important;
+            }
+
+            label[for="dateTo"] {
+                font-size: 14px;
+            }
+
+            input.date#dateTo {
+                font-size: 14px;
+                /* padding: 6px 12px; */
+                width: 110px;
+            }
+
+            #productorderName {
+                font-size: 13px;
+            }
+
+            #dateOrdered {
+                font-size: 17px;
+                font-weight: bold;
+            }
+
+            #priceTotal {
+                font-size: 13px;
+            }
+
+            #pricetotalValue {
+                font-weight: bold;
+            }
+        }
+
+        @media (max-width: 1100px) {
+
+            #orderCount,
+            #productCount {
+                font-size: 12px;
+            }
+
+            #search-btn {
+                font-size: 10px;
+            }
+
+            #search-btn i {
+                font-size: 10px;
+            }
+
+            label.me-1#dateFrom {
+                font-size: 12px;
+            }
+
+            input.me-4.date#dateFrom {
+                font-size: 12px;
+                /* padding: 6px 12px; */
+                width: 90px;
+                margin-right: 8px !important;
+            }
+
+            label[for="dateTo"] {
+                font-size: 12px;
+            }
+
+            input.date#dateTo {
+                font-size: 12px;
+                /* padding: 6px 12px; */
+                width: 90px;
+            }
+
+            #productorderName {
+                font-size: 13px;
+            }
+
+            #dateOrdered {
+                font-size: 17px;
+                font-weight: bold;
+            }
+
+            #priceTotal {
+                font-size: 13px;
+            }
+
+            #pricetotalValue {
+                font-weight: bold;
+            }
+        }
+
+        @media (max-width: 992px) {
+
+            #orderCount,
+            #productCount {
+                font-size: 9px;
+            }
+
+            #search-btn {
+                font-size: 6px;
+            }
+
+            #search-btn i {
+                font-size: 6px;
+            }
+
+            label.me-1#dateFrom {
+                font-size: 11px;
+            }
+
+            input.me-4.date#dateFrom {
+                font-size: 9px;
+                /* padding: 6px 9px; */
+                width: 90px;
+                margin-right: 8px !important;
+            }
+
+            label[for="dateTo"] {
+                font-size: 9px;
+            }
+
+            input.date#dateTo {
+                font-size: 9px;
+                /* padding: 6px 12px; */
+                width: 90px;
+            }
+
+            #productorderName {
+                font-size: 11px;
+            }
+
+            #dateOrdered {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            #priceTotal {
+                font-size: 11px;
+            }
+
+            #pricetotalValue {
+                font-weight: bold;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+
+            #orderCount,
+            #productCount {
+                font-size: 8px;
+            }
+
+            #search-btn {
+                font-size: 6px;
+            }
+
+            #search-btn i {
+                font-size: 6px;
+            }
+
+            label.me-1#dateFrom {
+                font-size: 9px;
+            }
+
+            input.me-4.date#dateFrom {
+                font-size: 9px;
+                /* padding: 6px 9px; */
+                width: 70px;
+                margin-right: 8px !important;
+            }
+
+            label[for="dateTo"] {
+                font-size: 9px;
+            }
+
+            input.date#dateTo {
+                font-size: 9px;
+                /* padding: 6px 12px; */
+                width: 70px;
+            }
+
+            #productorderName {
+                font-size: 11px;
+            }
+
+            #dateOrdered {
+                font-size: 15px;
+                font-weight: bold;
+            }
+
+            #priceTotal {
+                font-size: 11px;
+            }
+
+            #pricetotalValue {
+                font-weight: bold;
+            }
+        }
+
+        @media (max-width: 576px) {}
     </style>
 </head>
 
@@ -140,31 +400,52 @@
         <h4 class="text-center mt-3">Transaction History</h4>
     </div>
 
+
+
     <div class="container-fluid">
-        <div class="row w-75 m-auto mt-3 justify-content-center">
-            @foreach ($groupedOrders as $orderId => $orders)
-                <div class="col-md-12">
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    @foreach ($orders as $order)
-                                        <p class="mb-0">{{ $order->product_name }}: {{ $order->QTY }}</p>
-                                    @endforeach
-                                </div>
-                                <div class="col-md-6 text-end">
-                                    <h5 class="card-title"> {{ date('F j, Y', strtotime($orders[0]->created_at)) }}
-                                    </h5>
-                                    <p class="card-text">Total Price: <b>{{ $orders->sum('total_price') }}</b></p>
+        <div class="row w-75 m-auto">
+            <div class="col-12 col-sm-12 col-md-8 mb-2 mt-2">
+                <form action="{{ route('Users.orders') }}" method="GET">
+                    @csrf
+                    <label class="me-1" id="dateFrom" for="dateFrom">From:</label>
+                    <input class="me-4 date" id="dateFrom" type="date" id="dateFrom" name="dateFrom" required>
+
+                    <label for="dateTo">To:</label>
+                    <input class="date" type="date" id="dateTo" name="dateTo" required>
+
+                    <button class="btn bg-success mb-1 ms-3 btn-sm" id="search-btn" type="submit" name="action"
+                        value="search"><i class="fa-solid fa-search" id="src-btn"></i> Search</button>
+                </form>
+            </div>
+            <div class="col-6 col-sm-6 col-md-2">
+                <p class="card-text pt-3" id="orderCount">Order Count: <b>{{ $orderCount }}</b></p>
+            </div>
+            <div class="col-6 col-sm-6 col-md-2">
+                <p class="card-text pt-3" id="productCount">Product Count: <b>{{ $productCount }}</b></p>
+            </div>
+        </div>
+        <div class="scrollable-container" style="max-height: 500px; overflow-y: auto;">
+            <div class="row w-75 m-auto mt-3 justify-content-center" style="max-height: 500px;">
+                @foreach ($groupedOrders as $orderId => $orders)
+                    <div class="col-md-12">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        @foreach ($orders as $order)
+                                            <p class="mb-0" id="productorderName">{{ $order->product_name }}: {{ $order->QTY }}</p>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-md-6 text-end">
+                                        <h5 class="card-title" id="dateOrdered">{{ date('F j, Y', strtotime($orders[0]->created_at)) }}</h5>
+                                        <p class="card-text" id="priceTotal">Total Price: <b id="priceTotalvalue">{{ $orders->sum('total_price') }}</b></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endforeach
-        </div>
-        <div class="container d-flex justify-content-center">
-            {{ $groupedOrders->links() }}
+                @endforeach
+            </div>
         </div>
     </div>
 </body>
