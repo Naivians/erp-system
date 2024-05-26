@@ -54,9 +54,9 @@
                     <div class="accordion-body">
 
                         <a href="{{ route('Admins.InventoryStockList') }}"
-                        class="text-dark mt-2 d-flex align-items-center">
-                        <i class='bx bxs-package fs-3 me-2 text-danger'></i>
-                        Stocklist </a>
+                            class="text-dark mt-2 d-flex align-items-center">
+                            <i class='bx bxs-package fs-3 me-2 text-danger'></i>
+                            Stocklist </a>
 
                         <a href="{{ route('Admins.InventoryStockinIndex') }}"
                             class="text-dark mt-2 d-flex align-items-center">
@@ -66,8 +66,6 @@
                 </div>
             </div>
         </div>
-
-
 
         <div class="accordion my-2" id="out">
             <div class="accordion-item">
@@ -81,12 +79,12 @@
                 <div id="outs" class="accordion-collapse collapse" data-bs-parent="#out">
                     <div class="accordion-body">
 
-                        <a href="{{ route('Admins.InventoryStockinIndex') }}"
-                        class="text-dark mt-2 d-flex align-items-center">
-                        <i class='bx bxs-package fs-3 me-2 text-danger'></i>
-                        Stockout list </a>
+                        <a href="{{ route('Admins.InventoryStockoutList') }}"
+                            class="text-dark mt-2 d-flex align-items-center">
+                            <i class='bx bxs-package fs-3 me-2 text-danger'></i>
+                            Stockout list </a>
 
-                        <a href="{{ route('Admins.InventoryStockinIndex') }}"
+                        <a href="{{ route('Admins.InventoryStockOutForm') }}"
                             class="text-dark mt-2 d-flex align-items-center">
                             <i class='bx bxs-package fs-3 me-2 text-danger'></i>
                             Stockout form </a>
@@ -94,18 +92,16 @@
                 </div>
             </div>
         </div>
-
-
-
+        {{--
         <a href="#" class="text-dark mt-2 d-flex align-items-center">
             <i class='bx bxs-cart-alt fs-3 me-2 text-danger'></i>
             Products</a>
 
         <a href="#" class="text-dark mt-2 d-flex align-items-center">
             <i class='bx bxs-purchase-tag fs-3 me-2 text-danger'></i>
-            Orders</a>
+            Orders</a> --}}
 
-        <a href="#" class="text-dark mt-2 d-flex align-items-center">
+        <a href="{{ route('Admins.Wastehome') }}" class="text-dark mt-2 d-flex align-items-center">
             <i class='bx bxs-trash fs-3 me-2 text-danger'></i>
             Waste</a>
 

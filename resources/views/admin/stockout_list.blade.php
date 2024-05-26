@@ -18,7 +18,7 @@
 
 
         @if (Session::has('warning'))
-            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Success: </strong> {{ Session::get('warning') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -27,7 +27,7 @@
 
         @if ($edited ?? false)
             <div class="card">
-                <form action="{{ route('Admins.InventoryStockinsUpdate') }}" method="POST">
+                <form action="{{ route('Admins.InventoryStockoutUpdate') }}" method="POST">
                     @csrf
                     @method('PUT')
                     <div class="card-header">
@@ -38,7 +38,7 @@
                             <div class="col-md-2 d-flex align-items-center justify-content-end">
                                 <button type="submit" class="btn btn-success me-2">Update</button>
                                 {{-- <a href="{{route('Admins.InventoryHome')}}" class="btn btn-danger" id="back">Back</a> --}}
-                                <a href="{{ route('Admins.InventoryStockList') }}" class="btn btn-danger">Back</a>
+                                <a href="{{ route('Admins.InventoryStockoutList') }}" class="btn btn-danger">Back</a>
                             </div>
                         </div>
                     </div>
@@ -62,8 +62,6 @@
                                 <label for="" class="form-label">Stocks</label>
                                 <input type="text" name="stocks" id="stocks" class="form-control" maxlength="20"
                                     value="{{ $item->stocks }}">
-
-                                <input type="hidden" name="old_stocks" value="{{ $item->stocks }}" >
                             </div>
                         </div>
                     </div>
@@ -93,23 +91,26 @@
                                     <input type="date" name="end_date" id="end_date" class="form-control">
                                 </div>
                                 <button class="btn btn-info mx-2" onclick="filterDate()">submit</button>
-                                <a href="{{ route('Admins.InventoryStockList') }}" id="back"
+                                <a href="{{ route('Admins.InventoryStockoutList') }}" id="back"
                                     class="btn btn-danger">Exit</a>
                             </div>
                         </div>
                         <div class="col-md-2">
-                            <h5 class="float-end">Stockin List</h5>
+                            <h5 class="float-end">Stockout List</h5>
                         </div>
                     </div>
                 </div>
             </div>
+
+
+
         @endif
 
         <div class="table-responsive">
             <table class="table table-striped" id="oldTable">
                 <thead>
                     <tr>
-                        <th class="bg-dark text-light">Date Added</th>
+                        <th class="bg-dark text-light">Date Consume</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
                         <th class="bg-dark text-light">Produuct Name</th>
@@ -121,26 +122,26 @@
                     </tr>
                 </thead>
                 <tbody id="searchTableBody">
-                    @foreach ($stockins as $stock)
+                    @foreach ($stockouts as $stockout)
                         <tr>
-                            <td>{{ $stock->created_at }}</td>
-                            <td>{{ $stock->code }}</td>
-                            <td>{{ $stock->category }}</td>
-                            <td>{{ $stock->name }}</td>
-                            <td>{{ $stock->description }}</td>
-                            <td>{{ number_format($stock->price, 2) }}</td>
-                            <td>{{ number_format($stock->stocks, 2) }}</td>
-                            <td>{{ number_format($stock->total_amount, 2) }}</td>
+                            <td>{{ $stockout->created_at }}</td>
+                            <td>{{ $stockout->code }}</td>
+                            <td>{{ $stockout->category }}</td>
+                            <td>{{ $stockout->name }}</td>
+                            <td>{{ $stockout->description }}</td>
+                            <td>{{ number_format($stockout->price, 2) }}</td>
+                            <td>{{ number_format($stockout->stocks, 2) }}</td>
+                            <td>{{ number_format($stockout->total_amount, 2) }}</td>
                             <td>
                                 <span>
-                                    <a href="{{ route('Admins.StockinsEdit', ['id' => $stock->id]) }}"
+                                    <a href="{{ route('Admins.StockoutsEdit', ['id' => $stockout->id]) }}"
                                         class="text-decoration-none text-dark">
                                         <i class='bx bx-edit btn btn-outline-primary'></i>
                                     </a>
                                 </span>
 
                                 <span>
-                                    <a href="{{ route('Admins.StockinsDestroy', ['id' => $stock->id]) }}"
+                                    <a href="{{ route('Admins.StockoutsDestroy', ['id' => $stockout->id]) }}"
                                         class="text-decoration-none text-dark">
                                         <i class='bx bx-trash btn btn-outline-danger'></i>
                                     </a>
@@ -152,15 +153,14 @@
             </table>
 
             <div class="d-flex align-items-center justify-content-center mt-5">
-                {{ $stockins->links() }}
+                {{ $stockouts->links() }}
             </div>
 
             <span id="sum" class="text-danger fs-2 mx-2"></span>
-
             <table class="table table-striped" id="searchTable">
                 <thead>
                     <tr>
-                        <th class="bg-dark text-light">Date Added</th>
+                        <th class="bg-dark text-light">Date Consume</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
                         <th class="bg-dark text-light">Produuct Name</th>
@@ -198,15 +198,13 @@
 @section('scripts')
     <script>
         $(document).ready(function() {
-
             $('#back').hide();
-
             var $table = $("#oldTable"); // Use jQuery to select the table element
             $("#searchTable").hide();
 
             $("#search").on("keyup", function() {
                 var query = $(this).val().trim(); // Trim whitespace from the search query
-                
+
                 if (query !== "") {
                     $("#searchTable").show();
                     $table.hide();
@@ -215,7 +213,7 @@
                         method: "GET",
                         data: {
                             query: query,
-                            model: "Stockin",
+                            model: "Stockout",
                         },
                         success: function(res) {
                             var results = "";
@@ -230,11 +228,11 @@
                                 $.each(res, function(index, item) {
                                     var itemId = item.id;
 
-                                    var editUrl = `/stockin/${item.id}/edit`;
+                                    var editUrl = `/stockout/${item.id}/edit`;
                                     var editLink =
                                         `<a href="${editUrl}" class="text-decoration-none text-dark"><i class='bx bx-edit btn btn-outline-primary'></i></a>`;
 
-                                    var deleteUrl = `/stockin/${item.id}/destroy`;
+                                    var deleteUrl = `/stockout/${item.id}/destroy`; //stockout/{id}/destroy
                                     var deleteLink =
                                         `<a href="${deleteUrl}" class="text-decoration-none text-dark"><i class='bx bx-trash btn btn-outline-danger'></a>`;
 
@@ -294,23 +292,6 @@
             });
         });
 
-        // function formatDateTime(dateTimeString) {
-        //     // Create a new Date object from the ISO string
-        //     const date = new Date(dateTimeString);
-
-        //     // Extract date and time components
-        //     const year = date.getFullYear();
-        //     const month = String(date.getMonth() + 1).padStart(2, "0");
-        //     const day = String(date.getDate()).padStart(2, "0");
-        //     const hours = String(date.getHours()).padStart(2, "0");
-        //     const minutes = String(date.getMinutes()).padStart(2, "0");
-        //     const seconds = String(date.getSeconds()).padStart(2, "0");
-
-        //     // Construct the formatted date-time string
-        //     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-        // }
-
-
         function filterDate() {
             start = $('#start_date').val()
             end = $('#end_date').val()
@@ -324,7 +305,7 @@
                     data: {
                         start_date: start,
                         end_date: end,
-                        model: 'Stockin'
+                        model: 'Stockout'
                     },
                     success: (res) => {
                         if (res.status != 200) {
@@ -382,19 +363,21 @@
             }
         }
 
-        function formatDateTime(dateTime) {
-            var options = {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            };
-            return new Date(dateTime).toLocaleDateString('en-GB', options);
+        function formatDateTime(dateTimeString) {
+            // Create a new Date object from the ISO string
+            const date = new Date(dateTimeString);
+
+            // Extract date and time components
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, "0");
+            const day = String(date.getDate()).padStart(2, "0");
+            const hours = String(date.getHours()).padStart(2, "0");
+            const minutes = String(date.getMinutes()).padStart(2, "0");
+            const seconds = String(date.getSeconds()).padStart(2, "0");
+
+            // Construct the formatted date-time string
+            return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
         }
-
-
     </script>
 @endsection
 @endsection

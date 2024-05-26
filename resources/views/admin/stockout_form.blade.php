@@ -16,7 +16,6 @@
             </div>
         @endif
 
-
         @if (Session::has('warning'))
             <div class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>Success: </strong> {{ Session::get('warning') }}
@@ -40,8 +39,6 @@
                         </div>
                     </div>
                 </div>
-
-
 
                 <div class="card-body">
                     <div class="row d-flex align-items-center">
@@ -80,27 +77,20 @@
                                 oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                         </div>
 
-                        <div class="col-md-1">
-                            dito yun
-                            <label for="" class="form-label">Beginning</label>
-                            <input type="text" name="beg_inv" id="beg_inv" class="form-control" maxlength="20"
-                                value="{{ $item->beg_inv }}">
-
-                                <input type="hidden" name="old_beg_inv" value="{{ $item->beg_inv }}">
-                        </div>
 
                     </div>
                 </div>
             </form>
         @else
-        <h5>Stockin Form</h5>
+        <h5>Stockout Form</h5>
             <div class="card mt-3 mb-4 p-2">
                 <div class="row  d-flex align-items-center justify-content-between">
 
                     <div class="col-md-4">
                         <div class="input-group">
                             <input type="text" id="product_code" class="form-control" autofocus
-                            placeholder="search item code" aria-label="Username" aria-describedby="basic-addon1" required autofocus>
+                                placeholder="search item code" aria-label="Username" aria-describedby="basic-addon1"
+                                required autofocus>
                             <button class="btn btn-success" id="searchBtn"><i class='bx bx-search-alt-2'></i></button>
                         </div>
                     </div>
@@ -116,19 +106,17 @@
         @endif
 
         <div class="table-responsive ">
-            {{-- {{ route('Inbound.create') }} --}}
             <form action="" method="post">
                 @csrf
 
                 <table class="table table-striped" id="searchTables">
                     <thead>
                         <tr>
-                            <th class="bg-dark text-light">Code</th> {{-- 1 --}}
-                            <th class="bg-dark text-light">Category</th> {{-- 2 --}}
-                            <th class="bg-dark text-light">Produuct Name</th> {{-- 2 --}}
-                            <th class="bg-dark text-light">Description</th> {{-- 2 --}}
-                            <th class="bg-dark text-light">Price</th> {{-- 1 --}}
-                            {{-- <th class="bg-dark text-light">Beginning INV</th> --}}
+                            <th class="bg-dark text-light">Code</th>
+                            <th class="bg-dark text-light">Category</th>
+                            <th class="bg-dark text-light">Produuct Name</th>
+                            <th class="bg-dark text-light">Description</th>
+                            <th class="bg-dark text-light">Price</th>
                             <th class="bg-dark text-light">Stocks</th>
                             <th class="bg-dark text-light">Actions</th>
                         </tr>
@@ -141,13 +129,61 @@
 
         <div class="card">
             <div class="card-body">
-                <button type="button" class="btn btn-success" onclick="saveStocks()">Submit</button>
-                <a href="{{route('Admins.InventoryStockList')}}" class="btn btn-danger">Back</a>
+                <button type="button" class="btn btn-success" onclick="saveStockouts()">Submit</button>
+                <a href="{{route('Admins.InventoryStockoutList')}}" class="btn btn-danger">Back</a>
             </div>
         </div>
         </form>
     </div>
     </div>
+
+
+@section('scripts')
+    <script>
+        function saveStockouts() {
+            const formData = new FormData(document.querySelector("form"));
+
+            const formDataObject = {};
+
+            formData.forEach(function(value, key) {
+                if (formDataObject.hasOwnProperty(key)) {
+                    if (Array.isArray(formDataObject[key])) {
+                        formDataObject[key].push(value);
+                    } else {
+                        formDataObject[key] = [formDataObject[key], value];
+                    }
+                } else {
+                    formDataObject[key] = value;
+                }
+            });
+
+            // console.log(formDataObject)
+
+            $.ajax({
+                url: "/stockout/saveForm",
+                method: "POST",
+                // dataType: 'json',
+                data: formDataObject,
+                success: function(res) {
+                    console.log(res)
+
+                    if (res.status === 200) {
+                        window.location.href = res.url;
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: 'Stocks Error',
+                            text: res.message
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(error);
+                },
+            });
+        }
+    </script>
+@endsection
 
 
 @endsection

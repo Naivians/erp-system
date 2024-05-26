@@ -7,9 +7,56 @@ use App\Models\Inventory;
 use Illuminate\Support\Facades\Session;
 use Illiminate\Support\Str;
 use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
 {
+
+    function searchDate(Request $request)
+    {
+
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+        $model = $request->model;
+
+        $sum = 0;
+
+        if ($start_date == '' || $end_date == '') {
+            return response()->json([
+                'status' => 419,
+                'message' => "All fields required"
+            ]);
+        }
+
+        $modelInstance = App('App\Models\\' . $model);
+
+        $startDate = Carbon::parse($start_date)->startOfDay();
+        $endDate = Carbon::parse($end_date)->endOfDay();
+
+        // Query the Stockin model to get records within the date range
+        $results = $modelInstance
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->get();
+
+        if ($results->isEmpty()) {
+            return response()->json([
+                'status' => 404,
+                'message' => "No records found"
+            ]);
+        }
+
+        foreach ($results as $res) {
+            $sum += $res->stocks;
+        }
+
+        return response()->json([
+            'status' => 200,
+            'sum' =>  $sum,
+            'data' => $results
+        ]);
+    }
+
     public function search(Request $request)
     {
         // Retrieve the search query from the request
@@ -46,7 +93,6 @@ class SearchController extends Controller
     {
         $code = $request->input('query');
         $results = Inventory::where('code', $code)->first();
-
 
         if ($results) {
             // Get the session data for 'products', or initialize it as an empty array if it doesn't exist

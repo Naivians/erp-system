@@ -7,7 +7,7 @@
     <div class="container d-flex align-items-center justify-content-center" style="height: 100vh;">
         <div class="card" style="width: 30rem;">
             <div class="card-body">
-                <h1 class="text-center text-dark mt-3">Login Here</h1>
+                <h1 class="text-center text-dark mt-3">Kumintang ERP System</h1>
 
                 <form action="{{ route('Logins.auth') }}" method="post" class="p-4">
                     @if (Session::has('error'))

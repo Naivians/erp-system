@@ -1,9 +1,57 @@
 var csrfToken = $('meta[name="csrf-token"]').attr("content");
-
 // stock in operatio
 $("#searchBtn").on("click", () => {
     productCodeSearch();
 });
+
+function archive(code) {
+    Swal.fire({
+        title: "Are you sure?",
+        text: "This code will be move to Waste and but will be deleted forever from stockin and stockout",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, move to waste",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "/admin/" + code + "/movetoarchive",
+                method: "GET",
+                data: {
+                    _token: csrfToken, // Include CSRF token as a parameter
+                },
+                success: (res) => {
+                    if (res.status === 200) {
+                        
+                        Swal.fire({
+                            position: "top-end",
+                            icon: "success",
+                            title: res.message,
+                            showConfirmButton: false,
+                            timer: 1500,
+                        });
+
+                        setInterval(function () {
+                            window.location.href = res.url;
+                        }, 1500);
+
+
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: res.message,
+                        });
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle error response
+                    console.error(xhr.responseText);
+                },
+            });
+        }
+    });
+}
 
 function productCodeSearch() {
     if ($("#product_code").val() == "") {
@@ -47,7 +95,7 @@ function displayData(products) {
                         <td>${item.description}</td>
                         <td>${item.price}</td>
                         <td class="d-flex justify-content-center">
-                            <input type="text" name="qty[]" value="${item.qty}" class="form-control text-center" style="width: 50px;"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                            <input type="text" name="qty[]" value="${item.qty}" class="form-control text-center" style="width: 100px;"  oninput="this.value = this.value.replace(/[^0-9.]/g, '')">
                             <input type="hidden" name="category[]" value="${item.category}">
                             <input type="hidden" name="name[]" value="${item.name}">
                             <input type="hidden" name="price[]" value="${item.price}">
@@ -120,7 +168,8 @@ function saveStocks() {
             } else {
                 Swal.fire({
                     icon: "error",
-                    title: res.message,
+                    title: "Opssss..",
+                    text: res.message,
                 });
             }
         },
@@ -207,8 +256,6 @@ function deleteUser(id) {
         }
     });
 }
-
-// category
 
 function deleteCategory(id) {
     Swal.fire({

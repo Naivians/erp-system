@@ -83,7 +83,10 @@
                             <div class="col-md-1">
                                 <label for="" class="form-label">Beginning</label>
                                 <input type="text" name="beg_inv" id="beg_inv" class="form-control" maxlength="20"
-                                    value="{{ $item->beg_inv }}">
+                                    value="{{ $item->beg_inv }}"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+
+                                <input type="hidden" name="old_beg_inv" value="{{ $item->beg_inv }}">
                             </div>
 
                         </div>
@@ -154,6 +157,7 @@
                             <div class="col-md-1">
                                 <label for="" class="form-label">Beginning</label>
                                 <input type="text" name="beg_inv" id="beg_inv" class="form-control" maxlength="20"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
                                     placeholder="1">
                             </div>
 
@@ -168,34 +172,34 @@
                 <thead>
                     <tr>
 
-                        <th class="bg-dark text-light">Code</th> {{-- 1 --}}
-                        <th class="bg-dark text-light">Category</th> {{-- 2 --}}
-                        <th class="bg-dark text-light">Produuct Name</th> {{-- 2 --}}
-                        <th class="bg-dark text-light">Description</th> {{-- 2 --}}
-                        <th class="bg-dark text-light">Price</th> {{-- 1 --}}
-                        <th class="bg-dark text-light">Beginning INV</th> {{-- 2 --}}
-                        <th class="bg-dark text-light">Initial Amount</th> {{-- 2 --}}
-                        <th class="bg-dark text-light">Stock In</th>
-                        <th class="bg-dark text-light">Stock Out</th>
-                        <th class="bg-dark text-light">Ending INV </th>
-                        <th class="bg-dark text-light">Total Amount </th>
-                        <th class="bg-dark text-light">Remarks</th>
-                        <th class="bg-dark text-light">Actions</th>
+                        <th class="bg-dark text-light text-center align-middle">Code</th> {{-- 1 --}}
+                        <th class="bg-dark text-light text-center align-middle">Category</th> {{-- 2 --}}
+                        <th class="bg-dark text-light text-center align-middle">Produuct Name</th> {{-- 2 --}}
+                        <th class="bg-dark text-light text-center align-middle">Description</th> {{-- 2 --}}
+                        <th class="bg-dark text-light text-center align-middle">Price</th> {{-- 1 --}}
+                        <th class="bg-dark text-light text-center align-middle">Beginning INV</th> {{-- 2 --}}
+                        <th class="bg-dark text-light text-center align-middle">Initial Amount</th> {{-- 2 --}}
+                        <th class="bg-dark text-light text-center align-middle">Stock In</th>
+                        <th class="bg-dark text-light text-center align-middle">Stock Out</th>
+                        <th class="bg-dark text-light text-center align-middle">Ending INV </th>
+                        <th class="bg-dark text-light text-center align-middle">Total Amount </th>
+                        <th class="bg-dark text-light text-center align-middle">Remarks</th>
+                        <th class="bg-dark text-light text-center align-middle">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($inventories as $inventory)
                         <tr>
-                            <td>{{ $inventory->code }}</td>
-                            <td>{{ $inventory->category }}</td>
-                            <td>{{ $inventory->name }}</td>
-                            <td>{{ $inventory->description }}</td>
-                            <td>{{ number_format($inventory->price, 2) }}</td>
-                            <td>{{ $inventory->beg_inv }}</td>
-                            <td>{{ number_format($inventory->initial, 2) }}</td>
-                            <td>{{ number_format($inventory->stockin, 2) }}</td>
-                            <td>{{ number_format($inventory->stockout, 2) }}</td>
-                            <td>
+                            <td class="text-center align-middle">{{ $inventory->code }}</td>
+                            <td class="text-center align-middle">{{ $inventory->category }}</td>
+                            <td class="text-center align-middle">{{ $inventory->name }}</td>
+                            <td class="text-center align-middle">{{ $inventory->description }}</td>
+                            <td class="text-center align-middle">{{ number_format($inventory->price, 2) }}</td>
+                            <td class="text-center align-middle">{{ $inventory->beg_inv }}</td>
+                            <td class="text-center align-middle">{{ number_format($inventory->initial, 2) }}</td>
+                            <td class="text-center align-middle">{{ number_format($inventory->stockin, 2) }}</td>
+                            <td class="text-center align-middle">{{ number_format($inventory->stockout, 2) }}</td>
+                            <td class="text-center align-middle">
                                 @if ($inventory->end_inv < 10)
                                     <span class="badge bg-danger">{{ $inventory->end_inv }}</span>
                                 @elseif ($inventory->end_inv > 10 && $inventory->end_inv < 20)
@@ -204,9 +208,18 @@
                                     <span class="badge bg-success">{{ $inventory->end_inv }}</span>
                                 @endif
                             </td>
-                            <td>{{ $inventory->total }}</td>
-                            <td></td>
+                            <td class="text-center align-middle">{{ number_format($inventory->total_amount) }}</td>
+                            <td class="text-center align-middle">
+                                @if ($inventory->end_inv < 10)
+                                    <span class="badge bg-danger">Order</span>
+                                @elseif ($inventory->end_inv > 10 && $inventory->end_inv < 20)
+                                    <span class="badge bg-warning">Running out of stocks</span>
+                                @else
+                                    <span class="badge bg-success">Good</span>
+                                @endif
+                            </td>
                             <td>
+
                                 <span>
                                     <a href="{{ route('Admins.InventoryEdit', ['id' => $inventory->id]) }}"
                                         class="text-decoration-none text-dark">
@@ -215,22 +228,24 @@
                                 </span>
 
                                 <span>
-                                    {{-- <a href="{{ route('Admins.InventoryDestroy', ['id' => $inventory->id]) }}"
-                                        class="text-decoration-none text-dark">
-                                        <i class='bx bx-trash btn btn-outline-danger'></i>
-                                    </a> --}}
-
                                     <i class='bx bx-trash btn btn-outline-danger'
                                         onclick='deleteInventory("{{ $inventory->code }}")'></i>
                                 </span>
+
+                                <span>
+                                    <i class='bx bx-archive btn btn-warning'
+                                        onclick='archive("{{ $inventory->code }}")'></i>
+                                </span>
+
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-            <div class="d-flex align-items-center justify-content-center mt-5">
+            <div class="d-flex align-items-center justify-content-center mt-4">
                 {{ $inventories->links() }}
             </div>
+
 
 
             <table class="table table-striped" id="searchTable">
@@ -263,8 +278,10 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td>
-                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
 
                 </tbody>
@@ -281,13 +298,13 @@
         $(document).ready(function() {
             var $table = $("#oldTable"); // Use jQuery to select the table element
             $("#searchTable").hide();
-
             $("#search").on("keyup", function() {
                 var query = $(this).val().trim(); // Trim whitespace from the search query
 
                 if (query !== "") {
                     $("#searchTable").show();
                     $table.hide();
+
                     $.ajax({
                         url: "/searchAll",
                         method: "GET",
@@ -315,6 +332,18 @@
                                     var deleteUrl = `/stockin/${item.id}/destroy`;
                                     var deleteLink =
                                         `<span> <i class='bx bx-trash btn btn-outline-danger ' onclick="deleteInventory(${item.code})"> </span>`;
+
+                                    var remarks = '';
+                                    if (item.end_inv < 10) {
+                                        remarks =
+                                            '<span class="badge bg-danger">Order</span>'
+                                    } else if (item.end_inv > 10 && item.end_inv < 20) {
+                                        remarks =
+                                            '<span class="badge bg-warning">Running out of stocks</span>'
+                                    } else {
+                                        remarks =
+                                            '<span class="badge bg-success">Good</span>'
+                                    }
 
                                     var row =
                                         "<tr>" +
@@ -355,7 +384,7 @@
                                         "</td>" +
 
                                         "<td>" +
-                                        item.remarks +
+                                        remarks +
                                         "</td>" +
 
                                         "<td>" +
@@ -370,7 +399,7 @@
                             } else {
                                 // If there are no search results, display a message or handle it accordingly
                                 $("#searchTable tbody").append(
-                                    '<tr><td colspan="10" class="text-center text-danger">No results found</td></tr>'
+                                    '<tr><td colspan="13" class="text-center text-danger">No results found</td></tr>'
                                 );
                             }
                         },
@@ -383,6 +412,7 @@
                 } else {
                     // If the search query is empty, show the table
                     $table.show();
+                    $('#pagination').show()
                     $("#searchTable").hide();
                 }
             });
