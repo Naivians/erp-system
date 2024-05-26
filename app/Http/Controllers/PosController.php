@@ -60,18 +60,21 @@ class PosController extends Controller
         return response()->json(['success' => true]);
     }
 
-
     public function getOrders(Request $request)
     {
         // Get the date range from the request
-        $dateFrom = $request->input('dateFrom');
-        $dateTo = $request->input('dateTo');
+        $dateFrom = $request->input('dateFrom') ?? date('Y-m-d');
+        $dateTo = $request->input('dateTo') ?? date('Y-m-d');
 
         // Calculate order count
         $orderCountQuery = DB::table('orders')->distinct('order_id');
 
         // Calculate product count
         $productCountQuery = DB::table('orders')->distinct('id');
+
+        // Calculate total sales
+        $totalSalesQuery = DB::table('orders')
+            ->select(DB::raw('SUM(price * QTY) as total_sales'));
 
         // If date filters are set, add them to the queries
         if ($dateFrom && $dateTo) {
@@ -80,10 +83,14 @@ class PosController extends Controller
 
             $productCountQuery->whereDate('created_at', '>=', $dateFrom)
                 ->whereDate('created_at', '<=', $dateTo);
+
+            $totalSalesQuery->whereDate('created_at', '>=', $dateFrom)
+                ->whereDate('created_at', '<=', $dateTo);
         }
 
         $orderCount = $orderCountQuery->count('order_id');
         $productCount = $productCountQuery->count('product_name');
+        $totalSales = $totalSalesQuery->first()->total_sales;
 
         // Get all orders
         // Start building the query
@@ -113,7 +120,8 @@ class PosController extends Controller
         return view('user.transactionHistory', [
             'groupedOrders' => $grouped,
             'orderCount' => $orderCount,
-            'productCount' => $productCount
+            'productCount' => $productCount,
+            'totalSales' => $totalSales
         ]);
     }
 }
