@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('code');
             $table->string('description');
             $table->decimal('price', 10, 2);
+            $table->string('icon')->nullable();
         });
     }
 
