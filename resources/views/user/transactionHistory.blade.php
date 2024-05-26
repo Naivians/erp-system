@@ -117,7 +117,7 @@
         @media (max-width: 1400px) {
 
             #orderCount,
-            #productCount {
+            #productCount, #totalSales {
                 font-size: 14px;
             }
 
@@ -154,7 +154,7 @@
         @media (max-width: 1200px) {
 
             #orderCount,
-            #productCount {
+            #productCount, #totalSales {
                 font-size: 14px;
             }
 
@@ -208,8 +208,8 @@
         @media (max-width: 1100px) {
 
             #orderCount,
-            #productCount {
-                font-size: 12px;
+            #productCount, #totalSales {
+                font-size: 14px;
             }
 
             #search-btn {
@@ -262,12 +262,13 @@
         @media (max-width: 992px) {
 
             #orderCount,
-            #productCount {
-                font-size: 9px;
+            #productCount, #totalSales {
+                font-size: 10px;
             }
 
             #search-btn {
                 font-size: 6px;
+                margin-bottom: 0 !important;
             }
 
             #search-btn i {
@@ -317,12 +318,13 @@
 
 
             #orderCount,
-            #productCount {
-                font-size: 8px;
+            #productCount, #totalSales {
+                font-size: 9px;
             }
 
             #search-btn {
                 font-size: 6px;
+                margin-bottom: 0;
             }
 
             #search-btn i {
@@ -367,8 +369,6 @@
                 font-weight: bold;
             }
         }
-
-        @media (max-width: 576px) {}
     </style>
 </head>
 
@@ -417,11 +417,16 @@
                         value="search"><i class="fa-solid fa-search" id="src-btn"></i> Search</button>
                 </form>
             </div>
-            <div class="col-6 col-sm-6 col-md-2">
-                <p class="card-text pt-3" id="orderCount">Order Count: <b>{{ $orderCount }}</b></p>
+        </div>
+        <div class="row w-75 m-auto">
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                <p class="card-text" id="orderCount">Order Count: <b>{{ $orderCount }}</b></p>
             </div>
-            <div class="col-6 col-sm-6 col-md-2">
-                <p class="card-text pt-3" id="productCount">Product Count: <b>{{ $productCount }}</b></p>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                <p class="card-text" id="productCount">Product Count: <b>{{ $productCount }}</b></p>
+            </div>
+            <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
+                <p class="card-text" id="totalSales">Sales of the Day: <b>{{ $totalSales }}</b></p>
             </div>
         </div>
         <div class="scrollable-container" style="max-height: 500px; overflow-y: auto;">
