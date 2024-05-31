@@ -105,7 +105,8 @@ class PosController extends Controller
 
         // Calculate total sales
         $totalSalesQuery = DB::table('orders')
-            ->select(DB::raw('SUM(price * QTY) as total_sales'));
+            ->select(DB::raw('SUM(price) as total_sales'));
+
 
         // If date filters are set, add them to the queries
         if ($dateFrom && $dateTo) {
