@@ -1489,7 +1489,8 @@
                     var minusButton = $(
                         '<button class="btn btn-danger minus-btn"><i class="fa-solid fa-minus"></i></button>');
                     var quantity = product.quantity ? product.quantity : 1;
-                    var quantityInput = $('<input type="number" class="form-control quantity-input" value="' + quantity + '" min="1">');
+                    var quantityInput = $('<input type="number" class="form-control quantity-input" value="' +
+                        quantity + '" min="1">');
                     var plusButton = $(
                         '<button class="btn btn-success plus-btn"><i class="fa-solid fa-plus"></i></button>');
                     var deleteButton = $(
@@ -1652,7 +1653,7 @@
 
                     orderData.push({
                         product_name: productName,
-                        price: price,
+                        price: price * quantity,
                         quantity: quantity
                     });
                 });
@@ -1681,6 +1682,11 @@
                                 'Order placed successfully!',
                                 'success'
                             );
+
+                            // Open the receipt in a new window and print it
+                            var receiptWindow = window.open('', '_blank');
+                            receiptWindow.document.write(response.receipt);
+                            receiptWindow.print();
                         }
                     },
                     error: function() {
@@ -1693,6 +1699,7 @@
                     }
                 });
             });
+
         });
     </script>
 

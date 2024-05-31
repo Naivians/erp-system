@@ -57,8 +57,39 @@ class PosController extends Controller
         // Clear the session data
         $request->session()->forget('currentOrder');
 
-        return response()->json(['success' => true]);
+        // Generate the receipt
+        $receipt = view('user.receipt', [
+            'orderData' => $orderData,
+            'orderId' => $order_id,
+            'total' => array_sum(array_column($orderData, 'price')),
+            'date' => now(),
+        ])->render();
+
+        return response()->json([
+            'success' => true,
+            'receipt' => $receipt,
+        ]);
     }
+
+    public function printReceipt($orderId)
+    {
+        $orders = DB::table('orders')->where('order_id', $orderId)->get();
+
+        $total = $orders->sum('price');
+
+        $receipt = view('user.receiptTransaction', [
+            'orderData' => $orders,
+            'orderId' => $orderId,
+            'total' => $total,
+            'date' => now(),
+        ])->render();
+
+        return response()->json([
+            'success' => true,
+            'receipt' => $receipt,
+        ]);
+    }
+
 
     public function getOrders(Request $request)
     {
@@ -100,7 +131,7 @@ class PosController extends Controller
                 'order_id',
                 'product_name',
                 'QTY',
-                DB::raw('SUM(price * QTY) as total_price')
+                DB::raw('SUM(price) as total_price')
             )
             ->groupBy('order_id', 'created_at', 'product_name', 'QTY')
             ->orderBy('order_id', 'desc');
