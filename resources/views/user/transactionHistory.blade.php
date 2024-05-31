@@ -473,10 +473,12 @@
                 type: 'GET',
                 success: function(response) {
                     if (response.success) {
-                        // Open the receipt in a new window and print it
-                        var receiptWindow = window.open('', '_blank');
-                        receiptWindow.document.write(response.receipt);
-                        receiptWindow.print();
+                        var printIframe = document.createElement('iframe');
+                            printIframe.style.display = 'none';
+                            document.body.appendChild(printIframe);
+                            printIframe.contentDocument.write(response.receipt);
+                            printIframe.contentDocument.close();
+                            printIframe.contentWindow.print();
                     }
                 },
                 error: function() {
