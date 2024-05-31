@@ -520,6 +520,13 @@
                 font-size: 0.8em;
             }
 
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 7px;
+                width: 50px;
+                /* Adjust the width as needed */
+            }
+
             .delete-btn {
                 font-size: 0.8em;
             }
@@ -582,6 +589,13 @@
                 font-size: 0.8em;
             }
 
+            .quantity-input {
+                font-size: 12px !important;
+                padding: 7px;
+                width: 50px;
+                /* Adjust the width as needed */
+            }
+
             .delete-btn {
                 font-size: 0.8em;
             }
@@ -642,20 +656,20 @@
 
             .quantity-container .btn {
                 font-size: 12px !important;
-                padding: 6px;
+                padding: 10px;
                 border-radius: 3px;
             }
 
             .quantity-input {
                 font-size: 12px !important;
-                padding: 5px;
+                padding: 7px;
                 width: 40px;
                 /* Adjust the width as needed */
             }
 
             .delete-btn {
                 font-size: 12px;
-                padding: 7px;
+                padding: 10px;
                 border-radius: 3px;
             }
 
@@ -714,7 +728,7 @@
 
             .quantity-container .btn {
                 font-size: 12px !important;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -727,7 +741,7 @@
 
             .delete-btn {
                 font-size: 12px;
-                padding: 7px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -786,7 +800,7 @@
 
             .quantity-container .btn {
                 font-size: 10px !important;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -799,7 +813,7 @@
 
             .delete-btn {
                 font-size: 10px;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -859,7 +873,7 @@
 
             .quantity-container .btn {
                 font-size: 9px !important;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -872,7 +886,7 @@
 
             .delete-btn {
                 font-size: 9px;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -931,12 +945,12 @@
 
             .product-name,
             .price {
-                font-size: 11px !important;
+                font-size: 10px !important;
             }
 
             .quantity-container .btn {
                 font-size: 9px !important;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -949,7 +963,7 @@
 
             .delete-btn {
                 font-size: 9px;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -1007,12 +1021,12 @@
 
             .product-name,
             .price {
-                font-size: 10px !important;
+                font-size: 9px !important;
             }
 
             .quantity-container .btn {
                 font-size: 8px !important;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -1025,7 +1039,7 @@
 
             .delete-btn {
                 font-size: 8px;
-                padding: 6px;
+                padding: 8px;
                 border-radius: 3px;
             }
 
@@ -1159,7 +1173,7 @@
 
             .product-name,
             .price {
-                font-size: 9px !important;
+                font-size: 8px !important;
             }
 
             .quantity-container .btn {
@@ -1171,8 +1185,7 @@
             .quantity-input {
                 font-size: 10px !important;
                 padding: 5px;
-                padding-right: 10px;
-                width: 20px;
+                width: 40px;
                 /* Adjust the width as needed */
             }
 
@@ -1241,21 +1254,20 @@
 
             .quantity-container .btn {
                 font-size: 7px !important;
-                padding: 5px;
+                padding: 6px;
                 border-radius: 2px;
             }
 
             .quantity-input {
                 font-size: 10px !important;
                 padding: 5px;
-                padding-right: 10px;
-                width: 20px;
+                width: 40px;
                 /* Adjust the width as needed */
             }
 
             .delete-btn {
                 font-size: 7px;
-                padding: 5px;
+                padding: 6px;
                 border-radius: 2px;
             }
 
@@ -1318,15 +1330,15 @@
 
             .quantity-container .btn {
                 font-size: 7px !important;
-                padding: 5px;
+                padding-top: 5px;
+                padding-bottom: 5px;
                 border-radius: 2px;
             }
 
             .quantity-input {
                 font-size: 10px !important;
-                padding: 5px;
-                padding-right: 10px;
-                width: 20px;
+                padding: 4px;
+                width: 40px;
                 /* Adjust the width as needed */
             }
 
@@ -1334,6 +1346,7 @@
                 font-size: 7px;
                 padding: 5px;
                 border-radius: 2px;
+                margin-left: 0;
             }
 
             #discount,
@@ -1404,16 +1417,10 @@
             <div class="col-4 col-md-4 d-flex flex-column position-relative"
                 style="max-height:100vh;background-color:rgb(255, 255, 255);overflow-y:overlay;">
                 <h3 class="mt-4 currentorderText" style="font-weight:bold;">Current Order</h3>
-                <div id="currentOrder" style="flex-grow: 1; overflow-y: auto; max-height: calc(100vh - 300px);">
+                <div id="currentOrder" style="flex-grow: 1; overflow-y: auto; max-height: calc(100vh - 280px);">
                     <!-- Order cards will be added here -->
                 </div>
-                <div class="position-absolute bottom-0 w-100 pe-3" style="height: 220px;">
-                    <div class="d-flex justify-content-between mb-2">
-                        <div id="discountText">Discount:</div>
-                        <div class="text-nowrap">
-                            <span id="discount" class="text-end">₱ 0.00</span>
-                        </div>
-                    </div>
+                <div class="position-absolute bottom-0 w-100 pe-3" style="height: 180px;">
                     <div class="d-flex justify-content-between mb-2">
                         <div id="subtotalText">Subtotal:</div>
                         <div class="text-nowrap">
@@ -1430,9 +1437,9 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-between mb-4">
-                        <div class="text-nowrap">
-                            <button class="btn btn-success mb-5 text-end w-100" id="submitOrder"><i
-                                    class="fa-solid fa-cart-shopping"></i> ORDER</button>
+                        <div class="text-nowrap m-auto">
+                            <button class="btn btn-success mb-5" id="submitOrder"><i
+                                    class="fa-solid fa-cart-shopping"></i> SUBMIT ORDER</button>
                         </div>
                     </div>
                 </div>
@@ -1449,6 +1456,10 @@
                     var item = data[i];
                     addToOrder(item);
                 }
+
+                $('.quantity-input').on('input', function() {
+                    updateSessionData();
+                });
             });
 
             // Will handle adding the items to the current order.
@@ -1477,8 +1488,9 @@
                     var quantityContainer = $('<div class="quantity-container"></div>');
                     var minusButton = $(
                         '<button class="btn btn-danger minus-btn"><i class="fa-solid fa-minus"></i></button>');
-                    var quantityInput = $(
-                        '<input type="number" class="form-control quantity-input" value="1" min="1">');
+                    var quantity = product.quantity ? product.quantity : 1;
+                    var quantityInput = $('<input type="number" class="form-control quantity-input" value="' +
+                        quantity + '" min="1">');
                     var plusButton = $(
                         '<button class="btn btn-success plus-btn"><i class="fa-solid fa-plus"></i></button>');
                     var deleteButton = $(
@@ -1495,6 +1507,7 @@
 
                     // Add event listeners for the minus, plus, and delete buttons
                     minusButton.click(function() {
+                        var quantityInput = $(this).siblings('.quantity-input');
                         var currentQuantity = parseInt(quantityInput.val());
                         if (currentQuantity > 1) {
                             quantityInput.val(currentQuantity - 1);
@@ -1504,6 +1517,7 @@
                     });
 
                     plusButton.click(function() {
+                        var quantityInput = $(this).siblings('.quantity-input');
                         var currentQuantity = parseInt(quantityInput.val());
                         quantityInput.val(currentQuantity + 1);
                         calculateTotals();
@@ -1518,9 +1532,9 @@
 
                     // Add event listener for quantity input field
                     quantityInput.on('input', function() {
-                        var currentQuantity = parseInt(quantityInput.val());
-                        if (currentQuantity < 1 || quantityInput.val() === '') {
-                            quantityInput.val(1); // Reset the value to 1 if it's less than 1
+                        var currentQuantity = parseInt($(this).val());
+                        if (currentQuantity < 1 || $(this).val() === '') {
+                            $(this).val(1); // Reset the value to 1 if it's less than 1
                         }
                         calculateTotals();
                         updateSessionData();
@@ -1610,6 +1624,8 @@
                         price: price,
                         quantity: quantity
                     });
+
+                    console.log(orderData);
                 });
 
                 $.ajax({
@@ -1637,7 +1653,7 @@
 
                     orderData.push({
                         product_name: productName,
-                        price: price,
+                        price: price * quantity,
                         quantity: quantity
                     });
                 });
@@ -1666,6 +1682,11 @@
                                 'Order placed successfully!',
                                 'success'
                             );
+
+                            // Open the receipt in a new window and print it
+                            var receiptWindow = window.open('', '_blank');
+                            receiptWindow.document.write(response.receipt);
+                            receiptWindow.print();
                         }
                     },
                     error: function() {
@@ -1678,6 +1699,7 @@
                     }
                 });
             });
+
         });
     </script>
 
