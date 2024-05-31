@@ -117,7 +117,8 @@
         @media (max-width: 1400px) {
 
             #orderCount,
-            #productCount, #totalSales {
+            #productCount,
+            #totalSales {
                 font-size: 14px;
             }
 
@@ -154,7 +155,8 @@
         @media (max-width: 1200px) {
 
             #orderCount,
-            #productCount, #totalSales {
+            #productCount,
+            #totalSales {
                 font-size: 14px;
             }
 
@@ -208,7 +210,8 @@
         @media (max-width: 1100px) {
 
             #orderCount,
-            #productCount, #totalSales {
+            #productCount,
+            #totalSales {
                 font-size: 14px;
             }
 
@@ -262,7 +265,8 @@
         @media (max-width: 992px) {
 
             #orderCount,
-            #productCount, #totalSales {
+            #productCount,
+            #totalSales {
                 font-size: 10px;
             }
 
@@ -318,7 +322,8 @@
 
 
             #orderCount,
-            #productCount, #totalSales {
+            #productCount,
+            #totalSales {
                 font-size: 9px;
             }
 
@@ -426,7 +431,7 @@
                 <p class="card-text" id="productCount">Product Count: <b>{{ $productCount }}</b></p>
             </div>
             <div class="col-4 col-sm-4 col-md-4 col-lg-4 col-xl-3">
-                <p class="card-text" id="totalSales">Sales of the Day: <b>{{ $totalSales }}</b></p>
+                <p class="card-text" id="totalSales">Sales of the Day: <b>₱ {{ number_format($totalSales, 2) }}</b></p>
             </div>
         </div>
         <div class="scrollable-container" style="max-height: 500px; overflow-y: auto;">
@@ -438,12 +443,17 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         @foreach ($orders as $order)
-                                            <p class="mb-0" id="productorderName">{{ $order->product_name }}: {{ $order->QTY }}</p>
+                                            <p class="mb-0" id="productorderName">{{ $order->product_name }}:
+                                                {{ $order->QTY }}</p>
                                         @endforeach
                                     </div>
                                     <div class="col-md-6 text-end">
-                                        <h5 class="card-title" id="dateOrdered">{{ date('F j, Y', strtotime($orders[0]->created_at)) }}</h5>
-                                        <p class="card-text" id="priceTotal">Total Price: <b id="priceTotalvalue">{{ $orders->sum('total_price') }}</b></p>
+                                        <h5 class="card-title" id="dateOrdered">
+                                            {{ date('F j, Y', strtotime($orders[0]->created_at)) }}</h5>
+                                        <p class="card-text" id="priceTotal">Total Price: <b
+                                                id="priceTotalvalue">₱ {{ number_format($orders->sum('total_price'), 2) }}</b></p>
+                                        <button class="btn btn-primary print-btn"
+                                            data-order-id="{{ $orderId }}">Print Receipt</button>
                                     </div>
                                 </div>
                             </div>
@@ -453,6 +463,33 @@
             </div>
         </div>
     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $('.print-btn').click(function() {
+            var orderId = $(this).data('order-id');
+
+            $.ajax({
+                url: '/print-receipt/' + orderId,
+                type: 'GET',
+                success: function(response) {
+                    if (response.success) {
+                        // Open the receipt in a new window and print it
+                        var receiptWindow = window.open('', '_blank');
+                        receiptWindow.document.write(response.receipt);
+                        receiptWindow.print();
+                    }
+                },
+                error: function() {
+                    // // Show error alert
+                    // Swal.fire(
+                    //     'Error!',
+                    //     'Error printing receipt. Please try again.',
+                    //     'error'
+                    // );
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>

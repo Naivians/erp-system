@@ -80,6 +80,7 @@ Route::middleware(['check.role:0'])->group(function () {
     Route::get('/session-data', [PosController::class, 'getSessionData'])->name('pos.session-data');
     Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
     Route::get('/orders-table', [PosController::class, 'getOrders'])->name('Users.orders');
+    Route::get('/print-receipt/{orderId}', [PosController::class, 'printReceipt'])->name('Users.printReceipt');
 });
 
 // auth
