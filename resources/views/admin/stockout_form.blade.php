@@ -82,7 +82,12 @@
                 </div>
             </form>
         @else
-        <h5>Stockout Form</h5>
+            <h5>Stockout Form</h5>
+            <div class="alert alert-warning">
+                <strong>Reminder:</strong> Ensure this form is not left incomplete if you decide to change your mind. Click
+                <strong> cancel </strong> if an item is already present, or go back if there is none; otherwise, you might encounter minor
+                errors.
+            </div>
             <div class="card mt-3 mb-4 p-2">
                 <div class="row  d-flex align-items-center justify-content-between">
 
@@ -114,7 +119,7 @@
                         <tr>
                             <th class="bg-dark text-light">Code</th>
                             <th class="bg-dark text-light">Category</th>
-                            <th class="bg-dark text-light">Produuct Name</th>
+                            <th class="bg-dark text-light">Product Name</th>
                             <th class="bg-dark text-light">Description</th>
                             <th class="bg-dark text-light">Price</th>
                             <th class="bg-dark text-light">Stocks</th>
@@ -130,7 +135,8 @@
         <div class="card">
             <div class="card-body">
                 <button type="button" class="btn btn-success" onclick="saveStockouts()">Submit</button>
-                <a href="{{route('Admins.InventoryStockoutList')}}" class="btn btn-danger">Back</a>
+                <a href="{{route('Search.SessionDestroy')}}" class="btn btn-warning">Cancel</a>
+                <a href="{{ route('Admins.InventoryStockoutList') }}" class="btn btn-danger">Back</a>
             </div>
         </div>
         </form>

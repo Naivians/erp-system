@@ -9,10 +9,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-
-        Schema::table('orders', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->bigInteger('order_id');
             $table->string('product_name');
             $table->string('code');
@@ -22,7 +21,6 @@ return new class extends Migration
             $table->string('QTY');
         });
     }
-
 
     /**
      * Reverse the migrations.

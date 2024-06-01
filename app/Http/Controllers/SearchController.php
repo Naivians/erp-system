@@ -13,6 +13,16 @@ use Illuminate\Support\Facades\DB;
 class SearchController extends Controller
 {
 
+    function destroySession(){
+
+        if(Session::has('products')){
+            Session::forget('products');
+            return redirect()->route('Admins.InventoryHome')->with('warning', 'Successfully clear form');
+        }
+
+        return redirect()->route('Admins.InventoryHome');
+    }
+
     function searchDate(Request $request)
     {
 

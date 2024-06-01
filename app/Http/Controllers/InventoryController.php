@@ -27,67 +27,51 @@ class InventoryController extends Controller
         return view('admin.checklist', ['inventories' => $inventories, 'categories' => $categories]);
     }
 
+
     function computeMontlyStocks()
     {
         $currentYear = Carbon::now()->year;
         $currentMonth = Carbon::now()->month;
 
+        // Compute total stock in for each code
         $stockins = Stockin::select('code', DB::raw('SUM(stocks) as total_stocks'))
             ->whereYear('created_at', $currentYear)
             ->whereMonth('created_at', $currentMonth)
             ->groupBy('code')
             ->get();
 
-        // / Use a transaction to ensure atomic updates
-        DB::transaction(function () use ($stockins) {
-            // Update the inventory for each code based on the stockins from the stockin table
-            foreach ($stockins as $res) {
-                Inventory::where('code', $res->code)->update(['stockin' => $res->total_stocks]);
-            }
-
-            // Get all inventory codes
-            $inventoryCodes = Inventory::pluck('code');
-
-            // Set stockin to 0 for inventory items not updated above
-            foreach ($inventoryCodes as $code) {
-                if (!$stockins->contains('code', $code)) {
-                    Inventory::where('code', $code)->update(['stockin' => 0]);
-                }
-            }
-        });
-
-
-        // stockout
-
-        $stockout = Stockout::select('code', DB::raw('SUM(stocks) as total_stocks'))
+        // Compute total stock out for each code
+        $stockouts = Stockout::select('code', DB::raw('SUM(stocks) as total_stocks'))
             ->whereYear('created_at', $currentYear)
             ->whereMonth('created_at', $currentMonth)
             ->groupBy('code')
             ->get();
 
-        // / Use a transaction to ensure atomic updates
-        DB::transaction(function () use ($stockout) {
-            // Update the inventory for each code based on the stockout from the stockin table
-            foreach ($stockout as $res) {
-                Inventory::where('code', $res->code)->update(['stockout' => $res->total_stocks]);
-            }
+        // Use a transaction to ensure atomic updates
+        DB::transaction(function () use ($stockins, $stockouts) {
+            foreach ($stockins as $stockin) {
+                $code = $stockin->code;
+                $totalStockIn = $stockin->total_stocks;
 
-            // Get all inventory codes
-            $inventoryCodes = Inventory::pluck('code');
+                // Find corresponding stock out for the code
+                $stockOut = $stockouts->where('code', $code)->first();
+                $totalStockOut = $stockOut ? $stockOut->total_stocks : 0;
 
-            // Set stockin to 0 for inventory items not updated above
-            foreach ($inventoryCodes as $code) {
-                if (!$stockout->contains('code', $code)) {
-                    Inventory::where('code', $code)->update(['stockout' => 0]);
-                }
+                // Calculate ending inventory and total amount
+                $endInv = $totalStockIn - $totalStockOut;
+                $totalAmount = $endInv * Inventory::where('code', $code)->value('price');
+
+                // Update inventory record for the code
+                Inventory::where('code', $code)->update([
+                    'stockin' => $totalStockIn,
+                    'stockout' => $totalStockOut,
+                    'end_inv' => $endInv,
+                    'total_amount' => $totalAmount
+                ]);
             }
         });
-
-
-        // compute for ending inv
-
-
     }
+
     function store(Request $request)
     {
 
@@ -143,9 +127,23 @@ class InventoryController extends Controller
         DB::beginTransaction();
 
         try {
-            $res1 = DB::table('stockins')->where('code', $code)->delete();
+
+            $currentYear = Carbon::now()->year;
+            $currentMonth = Carbon::now()->month;
+
+            // Delete records from the Stockin model
+            $res1 = Stockin::where('code', $code)
+                ->whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $currentMonth)
+                ->delete();
+
             $res2 = DB::table('inventories')->where('code', $code)->delete();
-            $res3 = DB::table('stockouts')->where('code', $code)->delete();
+
+            // Delete records from the Stockout model
+            $res3 = Stockout::where('code', $code)
+                ->whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $currentMonth)
+                ->delete();
 
             if ($res1 === 0 && $res2 === 1 && $res3 === 0) {
                 DB::commit();
@@ -155,7 +153,6 @@ class InventoryController extends Controller
                     'message' => 'Successfully deleted items from this table',
                     'url' => route('Admins.InventoryHome'),
                 ]);
-
             } else {
 
                 if ($res1 === 0 && $res2 === 0 && $res3 == 0) {
@@ -211,7 +208,6 @@ class InventoryController extends Controller
 
         $today = Carbon::today();
 
-
         $price = (float) $request->price;
         $initial = (float) ($request->beg_inv * $price);
 
@@ -263,6 +259,10 @@ class InventoryController extends Controller
                 $totalStockins  += $stocks->stocks;
             }
 
+            if ($request->beg_inv < $inventory->stockout) {
+                return redirect()->back()->with('error', 'Stockout cannot be greater than Stockin');
+            }
+
 
             $updatedRows = Stockin::where('code', $request->code)
                 ->whereDate('created_at', $inventory->created_at)
@@ -308,8 +308,6 @@ class InventoryController extends Controller
                 'initial' => $initial,
             ]
         );
-
-
         if (!$update) {
             return redirect()->back()->with('error', 'Failed to update item');
         }

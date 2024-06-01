@@ -16,6 +16,9 @@ use App\Http\Controllers\WasteController;
 // home
 Route::get('/', [HomeController::class, 'index'])->name('login');
 
+
+
+
 // admin
 Route::middleware(['check.role:1'])->group(function () {
     Route::get('/admin/home', [HomeController::class, 'adminHome'])->name('Admins.home');
@@ -69,6 +72,7 @@ Route::middleware(['check.role:1'])->group(function () {
     Route::get('/deleteItemcode/{itemCode}', [SearchController::class, 'destroy'])->name('Admins.searchDestroy');
     Route::get('/searchAll', [SearchController::class, 'search'])->name('Search.All');
     Route::get('/searchDate', [SearchController::class, 'searchDate'])->name('Search.betweenDate');
+    Route::get('/cancelForm', [SearchController::class, 'destroySession'])->name('Search.SessionDestroy');
 });
 
 

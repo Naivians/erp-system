@@ -6,6 +6,10 @@ use Illuminate\Console\Command;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Models\Stockin;
+use App\Models\TempStockins;
+use Carbon\Carbon;
+use Exception;
 
 class CalculateEndingInventory extends Command
 {
@@ -28,40 +32,37 @@ class CalculateEndingInventory extends Command
      */
     public function handle()
     {
-        DB::beginTransaction();
+        Inventory::chunk(100, function ($inventories) {
+            DB::beginTransaction();
+            try {
+                $firstDayOfNextMonth = Carbon::now()->addMonth()->startOfMonth();
 
-        try {
-            $inventories = Inventory::all();
+                // at 23:59 last day of the month should be triggered
+                foreach ($inventories as $inventory) {
 
-            $newInventories = [];
-            foreach ($inventories as $inventory) {
+                    Inventory::where('code', $inventory->code)->update([
+                        'beg_inv' => $inventory->end_inv,
+                        'initial' => $inventory->end_inv * $inventory->price,
+                    ]);
 
-                $newInventories[] = [
-                    'code' => $inventory->code,
-                    'category' => $inventory->category,
-                    'name' => $inventory->name,
-                    'price' => $inventory->price,
-                    'description' => $inventory->description,
-                    'beg_inv' => $inventory->end_inv,
-                    'initial' => $inventory->end_inv * $inventory->price,
-                    'stockin' => $inventory->end_inv,
-                    'stockout' => 0,
-                    'end_inv' => 0,
-                    'total_amount' => 0,
-                    'created_at' => now(),
-                    'updated_at' => now(),
-                ];
+                    Stockin::create([
+                        'code' => $inventory->code,
+                        'category' => $inventory->category,
+                        'name' => $inventory->name,
+                        'description' => $inventory->description,
+                        'price' => $inventory->price,
+                        'stocks' => $inventory->end_inv,
+                        'total_amount' => $inventory->end_inv * $inventory->price,
+                        'created_at' => $firstDayOfNextMonth,
+                        'updated_at' => $firstDayOfNextMonth,
+                    ]);
+                }
+
+                DB::commit();
+            } catch (Exception $e) {
+                DB::rollBack();
+                Log::error('Error updating inventory record for code: ' . $inventory->code . ' - ' . $e->getMessage());
             }
-
-            Inventory::insert($newInventories);
-
-            DB::commit();
-
-            $this->info('Ending inventory calculated and saved.');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            Log::error('Error creating inventory records: ' . $e->getMessage());
-            $this->error('Failed to calculate ending inventory.');
-        }
+        });
     }
 }

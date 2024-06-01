@@ -9,9 +9,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::table('products', function (Blueprint $table) {
+        Schema::create('products', function (Blueprint $table) {
             $table->string('product_name');
             $table->string('category');
             $table->string('code');
@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
         });
     }
-
 
     /**
      * Reverse the migrations.

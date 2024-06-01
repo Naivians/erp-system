@@ -14,11 +14,18 @@ use App\Models\Inventory;
 use Illuminate\Support\Facades\Cache;
 
 
+
 class StockinController extends Controller
 {
     function index()
     {
-        return view('admin.stockin', ['stockins' => Stockin::paginate(10), 'categories' => Category::all()]);
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $stockins = Stockin::whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->paginate(5);
+        return view('admin.stockin', ['stockins' => $stockins, 'categories' => Category::all()]);
     }
 
     function saveForm(Request $request)

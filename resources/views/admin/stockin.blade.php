@@ -9,6 +9,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+
         @if (Session::has('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 <strong>Success: </strong> {{ Session::get('success') }}
@@ -94,6 +95,9 @@
             </form>
         @else
         <h5>Stockin Form</h5>
+            <div class="alert alert-warning">
+                <strong>Reminder:</strong> Ensure this form is not left incomplete if you decide to change your mind. Click  <strong> cancel </strong> if an item is already present, or go back if there is none; otherwise, you might encounter minor errors.
+            </div>
             <div class="card mt-3 mb-4 p-2">
                 <div class="row  d-flex align-items-center justify-content-between">
 
@@ -125,7 +129,7 @@
                         <tr>
                             <th class="bg-dark text-light">Code</th> {{-- 1 --}}
                             <th class="bg-dark text-light">Category</th> {{-- 2 --}}
-                            <th class="bg-dark text-light">Produuct Name</th> {{-- 2 --}}
+                            <th class="bg-dark text-light">Product Name</th> {{-- 2 --}}
                             <th class="bg-dark text-light">Description</th> {{-- 2 --}}
                             <th class="bg-dark text-light">Price</th> {{-- 1 --}}
                             {{-- <th class="bg-dark text-light">Beginning INV</th> --}}
@@ -142,6 +146,7 @@
         <div class="card">
             <div class="card-body">
                 <button type="button" class="btn btn-success" onclick="saveStocks()">Submit</button>
+                <a href="{{route('Search.SessionDestroy')}}" class="btn btn-warning">Cancel</a>
                 <a href="{{route('Admins.InventoryStockList')}}" class="btn btn-danger">Back</a>
             </div>
         </div>

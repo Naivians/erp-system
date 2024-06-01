@@ -44,7 +44,7 @@
                         <th class="bg-dark text-light text-center align-middle">Move Date</th>
                         <th class="bg-dark text-light text-center align-middle">Code</th>
                         <th class="bg-dark text-light text-center align-middle">Category</th>
-                        <th class="bg-dark text-light text-center align-middle">Produuct Name</th>
+                        <th class="bg-dark text-light text-center align-middle">Product Name</th>
                         <th class="bg-dark text-light text-center align-middle">Description</th>
                         <th class="bg-dark text-light text-center align-middle">Price</th>
                         <th class="bg-dark text-light text-center align-middle">Beginning INV</th>
@@ -104,7 +104,7 @@
                         <th class="bg-dark text-light">Move Date</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
-                        <th class="bg-dark text-light">Produuct Name</th>
+                        <th class="bg-dark text-light">Product Name</th>
                         <th class="bg-dark text-light">Description</th>
                         <th class="bg-dark text-light">Price</th>
                         <th class="bg-dark text-light">Beginning INV</th>

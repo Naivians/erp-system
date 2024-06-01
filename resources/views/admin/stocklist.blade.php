@@ -19,7 +19,14 @@
 
         @if (Session::has('warning'))
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                <strong>Success: </strong> {{ Session::get('warning') }}
+                <strong>Warning: </strong> {{ Session::get('warning') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success: </strong> {{ Session::get('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
@@ -63,7 +70,7 @@
                                 <input type="text" name="stocks" id="stocks" class="form-control" maxlength="20"
                                     value="{{ $item->stocks }}">
 
-                                <input type="hidden" name="old_stocks" value="{{ $item->stocks }}" >
+                                <input type="hidden" name="old_stocks" value="{{ $item->stocks }}">
                             </div>
                         </div>
                     </div>
@@ -112,7 +119,7 @@
                         <th class="bg-dark text-light">Date Added</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
-                        <th class="bg-dark text-light">Produuct Name</th>
+                        <th class="bg-dark text-light">Product Name</th>
                         <th class="bg-dark text-light">Description</th>
                         <th class="bg-dark text-light">Price</th>
                         <th class="bg-dark text-light">Stocks</th>
@@ -163,7 +170,7 @@
                         <th class="bg-dark text-light">Date Added</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
-                        <th class="bg-dark text-light">Produuct Name</th>
+                        <th class="bg-dark text-light">Product Name</th>
                         <th class="bg-dark text-light">Description</th>
                         <th class="bg-dark text-light">Price</th>
                         <th class="bg-dark text-light">Stocks</th>
@@ -206,7 +213,7 @@
 
             $("#search").on("keyup", function() {
                 var query = $(this).val().trim(); // Trim whitespace from the search query
-                
+
                 if (query !== "") {
                     $("#searchTable").show();
                     $table.hide();
@@ -333,7 +340,7 @@
                                 title: "Oops...",
                                 text: res.message,
                             });
-                        }else{
+                        } else {
                             displayData(res.data, res.sum)
                         }
                     }
@@ -393,8 +400,6 @@
             };
             return new Date(dateTime).toLocaleDateString('en-GB', options);
         }
-
-
     </script>
 @endsection
 @endsection

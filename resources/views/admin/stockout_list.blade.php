@@ -113,7 +113,7 @@
                         <th class="bg-dark text-light">Date Consume</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
-                        <th class="bg-dark text-light">Produuct Name</th>
+                        <th class="bg-dark text-light">Product Name</th>
                         <th class="bg-dark text-light">Description</th>
                         <th class="bg-dark text-light">Price</th>
                         <th class="bg-dark text-light">Stocks</th>
@@ -163,7 +163,7 @@
                         <th class="bg-dark text-light">Date Consume</th>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
-                        <th class="bg-dark text-light">Produuct Name</th>
+                        <th class="bg-dark text-light">Product Name</th>
                         <th class="bg-dark text-light">Description</th>
                         <th class="bg-dark text-light">Price</th>
                         <th class="bg-dark text-light">Stocks</th>

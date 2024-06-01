@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Waste;
 use App\Models\Inventory;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class WasteController extends Controller
 {
@@ -32,7 +33,7 @@ class WasteController extends Controller
             'initial' => $results->initial,
             'stockin' => $results->stockin,
             'stockout' => $results->stockout,
-            'end_inv' => $endInv ,
+            'end_inv' => $endInv,
             'total_amount' => $endInv * $results->price,
         ]);
 
@@ -47,30 +48,18 @@ class WasteController extends Controller
         DB::beginTransaction();
 
         try {
-            $res1 = DB::table('stockins')->where('code', $code)->delete();
-            $res2 = DB::table('inventories')->where('code', $code)->delete();
-            $res3 = DB::table('stockouts')->where('code', $code)->delete();
+            $currentYear = Carbon::now()->year;
+            $currentMonth = Carbon::now()->month;
 
-            if ($res1 === 0 && $res2 === 1 && $res3 === 0) {
+            // Delete records from the Stockin model
+            $res = Inventory::where('code', $code)
+                ->whereYear('created_at', $currentYear)
+                ->whereMonth('created_at', $currentMonth)
+                ->delete();
+
+            if (!$res == 1) {
                 DB::commit();
 
-                return response()->json([
-                    'status' => 200,
-                    'message' => 'Successfully move items to waste',
-                    'url' => route('Admins.InventoryHome'),
-                ]);
-
-            } else {
-
-                if ($res1 === 0 && $res2 === 0 && $res3 == 0) {
-                    DB::rollBack();
-                    return response()->json([
-                        'status' => 500,
-                        'message' => 'Failed to delete item',
-                    ]);
-                }
-
-                DB::commit();
                 return response()->json([
                     'status' => 200,
                     'message' => 'Successfully move items to waste',
@@ -78,11 +67,6 @@ class WasteController extends Controller
                 ]);
             }
         } catch (\Exception $e) {
-
-            // return response()->json([
-            //     'status' => 500,
-            //     'message' => $res1 . ' ' . $res2 ,
-            // ]);
 
             DB::rollBack();
             return response()->json([

@@ -24,7 +24,7 @@ class AuthController extends Controller
             'username' => 'required',
             'password' => 'required'
         ]);
-
+        
         $user = User::where('username', $request->username)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {

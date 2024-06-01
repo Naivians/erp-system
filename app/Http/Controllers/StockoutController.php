@@ -18,7 +18,14 @@ class StockoutController extends Controller
 {
     function index()
     {
-        return view('admin.stockout_list', ['stockouts' => Stockout::paginate(10)]);
+        $currentMonth = Carbon::now()->month;
+        $currentYear = Carbon::now()->year;
+
+        $stockins = Stockout::whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->paginate(5);
+
+        return view('admin.stockout_list', ['stockouts' =>$stockins]);
     }
 
     function formPage()
@@ -172,8 +179,8 @@ class StockoutController extends Controller
             return redirect()->back()->with('error', 'Failed to update item');
         }
 
-         // update end inv
-         Inventory::where('code', $stocks->code)->update(
+        // update end inv
+        Inventory::where('code', $stocks->code)->update(
             [
                 'end_inv' =>  $inventory->stockin - $request->stocks,
                 'total_amount' => $total,

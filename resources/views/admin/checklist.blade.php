@@ -4,6 +4,8 @@
     <div class="container-fluid">
 
         <div class="card mb-3">
+
+
             @if (Session::has('error'))
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <strong>Error: </strong> {{ Session::get('error') }}
@@ -18,9 +20,10 @@
             @endif
 
 
+
             @if (Session::has('warning'))
-                <div class="alert alert-info alert-dismissible fade show" role="alert">
-                    <strong>Success: </strong> {{ Session::get('warning') }}
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Warning: </strong> {{ Session::get('warning') }}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
@@ -174,7 +177,7 @@
 
                         <th class="bg-dark text-light text-center align-middle">Code</th> {{-- 1 --}}
                         <th class="bg-dark text-light text-center align-middle">Category</th> {{-- 2 --}}
-                        <th class="bg-dark text-light text-center align-middle">Produuct Name</th> {{-- 2 --}}
+                        <th class="bg-dark text-light text-center align-middle">Product Name</th> {{-- 2 --}}
                         <th class="bg-dark text-light text-center align-middle">Description</th> {{-- 2 --}}
                         <th class="bg-dark text-light text-center align-middle">Price</th> {{-- 1 --}}
                         <th class="bg-dark text-light text-center align-middle">Beginning INV</th> {{-- 2 --}}
@@ -253,7 +256,7 @@
                     <tr>
                         <th class="bg-dark text-light">Code</th>
                         <th class="bg-dark text-light">Category</th>
-                        <th class="bg-dark text-light">Produuct Name</th>
+                        <th class="bg-dark text-light">Product Name</th>
                         <th class="bg-dark text-light">Description</th>
                         <th class="bg-dark text-light">Price</th>
                         <th class="bg-dark text-light">Beginning INV</th>
@@ -421,7 +424,7 @@
         function deleteInventory(code) {
             Swal.fire({
                 title: "Are you sure?",
-                text: "All Data with this code from stockin, stockout and from this table will be deleted forever",
+                text: "This action will remove all records with the same code from the stokin, stock out, and this table for the current month and year.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

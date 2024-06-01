@@ -12,15 +12,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('inventory:calculate-ending')->everyMinute();
-        // $schedule->command('inventory:update-beginning')->everyMinute();
+        $schedule->command('inventory:calculate-ending')
+            ->monthly()
+            ->lastDayOfMonth()
+            ->at('23:59');
     }
-
-    protected function lastDayOfMonth()
-    {
-        return now()->endOfMonth()->day;
-    }
-
     /**
      * Register the commands for the application.
      */

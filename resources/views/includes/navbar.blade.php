@@ -1,7 +1,7 @@
 <nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
         <span onclick="toggleSidebar()"><i class='bx bx-menu fs-3 text-danger'></i></span>
-        <div class="dropdown">
+        <div class="dropdown ">
             <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                 @if (Session::has('user'))
                     {{Session::get('user')->name}}

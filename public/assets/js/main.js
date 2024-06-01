@@ -7,7 +7,7 @@ $("#searchBtn").on("click", () => {
 function archive(code) {
     Swal.fire({
         title: "Are you sure?",
-        text: "This code will be move to Waste and but will be deleted forever from stockin and stockout",
+        text: "This code will be moved to Waste but will be permanently deleted from this table.",
         icon: "warning",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
@@ -23,7 +23,7 @@ function archive(code) {
                 },
                 success: (res) => {
                     if (res.status === 200) {
-                        
+
                         Swal.fire({
                             position: "top-end",
                             icon: "success",
