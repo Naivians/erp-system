@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PosController extends Controller
 {
@@ -38,6 +39,12 @@ class PosController extends Controller
         // Generate a new order_id
         $order_id = DB::table('orders')->max('order_id') + 1;
 
+        $qty = 0;
+
+        // Retrieve the user from the session
+        $user = $request->session()->get('user');
+        $cashier = $user ? $user->name : 'Guest';
+
         // Process the order data and save it to the 'orders' table
         foreach ($orderData as $item) {
             $product = DB::table('products')->where('product_name', $item['product_name'])->first();
@@ -52,6 +59,9 @@ class PosController extends Controller
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+
+            // Add quantity to total quantity
+            $qty += $item['quantity'];
         }
 
         // Clear the session data
@@ -61,8 +71,10 @@ class PosController extends Controller
         $receipt = view('user.receipt', [
             'orderData' => $orderData,
             'orderId' => $order_id,
+            'qty' => $qty,
+            'cashier' => $cashier,
             'total' => array_sum(array_column($orderData, 'price')),
-            'date' => now(),
+            'date' => now()->format('h:i a, D d M Y'),
         ])->render();
 
         return response()->json([
@@ -71,17 +83,23 @@ class PosController extends Controller
         ]);
     }
 
-    public function printReceipt($orderId)
+    public function printReceipt($orderId, Request $request)
     {
         $orders = DB::table('orders')->where('order_id', $orderId)->get();
+        $total = DB::table('orders')->where('order_id', $orderId)->sum('price');
+        $qty = DB::table('orders')->where('order_id', $orderId)->sum('QTY');
 
-        $total = $orders->sum('price');
+        // Retrieve the user from the session
+        $user = $request->session()->get('user');
+        $cashier = $user ? $user->name : 'Guest';
 
         $receipt = view('user.receiptTransaction', [
             'orderData' => $orders,
             'orderId' => $orderId,
             'total' => $total,
-            'date' => now(),
+            'cashier' => $cashier,
+            'qty' => $qty,
+            'date' => now()->format('h:i a, D d M Y'),
         ])->render();
 
         return response()->json([

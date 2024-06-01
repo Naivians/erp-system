@@ -38,8 +38,6 @@ class AuthController extends Controller
         } else {
             return redirect()->back()->with('error', 'username and password is incorrect');
         }
-
-
     }
 
 

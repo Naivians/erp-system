@@ -77,6 +77,7 @@ Route::middleware(['check.role:0'])->group(function () {
     Route::get('/pos', [HomeController::class, 'userPOS'])->name('Users.POS');
     Route::get('/pos/{category}', [PosController::class, 'showProductsByCategory'])->name('Users.category');
     Route::post('/update-session', [PosController::class, 'updateSession'])->name('pos.update-session');
+    Route::post('/update-session', [PosController::class, 'updateSession'])->name('pos.update-session');
     Route::get('/session-data', [PosController::class, 'getSessionData'])->name('pos.session-data');
     Route::post('/place-order', [PosController::class, 'placeOrder'])->name('pos.place-order');
     Route::get('/orders-table', [PosController::class, 'getOrders'])->name('Users.orders');
