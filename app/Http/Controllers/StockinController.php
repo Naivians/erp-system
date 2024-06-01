@@ -41,19 +41,18 @@ class StockinController extends Controller
         $date_today = Carbon::now()->toDateString();
 
 
-        // foreach ($categories as $index => $category) {
+        foreach ($categories as $index => $category) {
 
-        //     $is_exist = Inventory::where('code', $codes[$index])
-        //         ->whereDate('created_at', $date_today)
-        //         ->exists();
-
-        //     if ($is_exist) {
-        //         return response()->json([
-        //             'status' => 404,
-        //             'message' => 'You are not allowed to restock this code since you just inserted it today to the masterlist. In order to proceed please remove this code and update it later or by the next day.'
-        //         ]);
-        //     }
-        // }
+            $is_exist = Inventory::where('code', $codes[$index])
+                ->whereDate('created_at', $date_today)
+                ->exists();
+            if ($is_exist) {
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'You are not allowed to restock this code since you just inserted it today to the masterlist. In order to proceed please remove this code and update it later or by the next day.'
+                ]);
+            }
+        }
 
 
         $data = [];
@@ -66,7 +65,7 @@ class StockinController extends Controller
                 'price' => $prices[$index],
                 'stocks' => $stocks[$index],
                 'total_amount' => $prices[$index] * $stocks[$index],
-                'created_at' => '2024-05-27',
+                'created_at' => now(),
                 'updated_at' => now(),
             ];
 

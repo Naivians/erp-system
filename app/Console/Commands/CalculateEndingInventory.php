@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use App\Models\Inventory;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class CalculateEndingInventory extends Command
 {
@@ -13,7 +15,6 @@ class CalculateEndingInventory extends Command
      * @var string
      */
     protected $signature = 'inventory:calculate-ending';
-
 
     /**
      * The console command description.
@@ -25,23 +26,42 @@ class CalculateEndingInventory extends Command
     /**
      * Execute the console command.
      */
-
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     public function handle()
     {
-        $inventories = Inventory::all();
+        DB::beginTransaction();
 
-        foreach ($inventories as $inventory) {
-            $endingInventory = $inventory->beg_inv + $inventory->end_inv;
-            $inventory->beg_inv = $endingInventory;
-            $inventory->initial = ($endingInventory * $inventory->price);
-            $inventory->save();
+        try {
+            $inventories = Inventory::all();
+
+            $newInventories = [];
+            foreach ($inventories as $inventory) {
+
+                $newInventories[] = [
+                    'code' => $inventory->code,
+                    'category' => $inventory->category,
+                    'name' => $inventory->name,
+                    'price' => $inventory->price,
+                    'description' => $inventory->description,
+                    'beg_inv' => $inventory->end_inv,
+                    'initial' => $inventory->end_inv * $inventory->price,
+                    'stockin' => $inventory->end_inv,
+                    'stockout' => 0,
+                    'end_inv' => 0,
+                    'total_amount' => 0,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ];
+            }
+
+            Inventory::insert($newInventories);
+
+            DB::commit();
+
+            $this->info('Ending inventory calculated and saved.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error creating inventory records: ' . $e->getMessage());
+            $this->error('Failed to calculate ending inventory.');
         }
-
-        $this->info('Ending inventory calculated and saved.');
     }
 }

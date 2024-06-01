@@ -1684,7 +1684,7 @@
                             );
 
                             // Open the receipt in a new window and print it
-                            var receiptWindow = window.open('', '_blank');
+                            var receiptWindow = window.open('');
                             receiptWindow.document.write(response.receipt);
                             receiptWindow.print();
                         }

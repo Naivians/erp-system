@@ -13,16 +13,14 @@ class WasteController extends Controller
     {
 
         $wastes = Waste::paginate(10);
-
         return view('admin.waste', ['wastes' => $wastes]);
     }
 
     function store($code)
     {
-
-
-
         $results = Inventory::where('code', $code)->first();
+
+        $endInv = $results->stockin - $results->stockout;
 
         $res = Waste::create([
             'code' => strtoupper($results->code),
@@ -31,9 +29,11 @@ class WasteController extends Controller
             'description' => $results->description,
             'price' => $results->price,
             'beg_inv' => $results->beg_inv,
+            'initial' => $results->initial,
             'stockin' => $results->stockin,
             'stockout' => $results->stockout,
-            'total_amount' => $results->total_amount,
+            'end_inv' => $endInv ,
+            'total_amount' => $endInv * $results->price,
         ]);
 
         if (!$res) {
