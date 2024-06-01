@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->nullable();
             $table->string('category')->nullable();
+            $table->string('beg_inv')->nullable();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             $table->float('price')->default(0);

@@ -1438,7 +1438,7 @@
                     </div>
                     <div class="d-flex justify-content-between mb-4">
                         <div class="text-nowrap m-auto">
-                            <button class="btn btn-success mb-5" id="submitOrder"><i
+                            <button class="btn btn-success btn-sm mb-5" id="submitOrder"><i
                                     class="fa-solid fa-cart-shopping"></i> SUBMIT ORDER</button>
                         </div>
                     </div>
@@ -1687,6 +1687,12 @@
                             var receiptWindow = window.open('');
                             receiptWindow.document.write(response.receipt);
                             receiptWindow.print();
+                            var printIframe = document.createElement('iframe');
+                            printIframe.style.display = 'none';
+                            document.body.appendChild(printIframe);
+                            printIframe.contentDocument.write(response.receipt);
+                            printIframe.contentDocument.close();
+                            printIframe.contentWindow.print();
                         }
                     },
                     error: function() {
